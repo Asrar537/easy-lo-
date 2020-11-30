@@ -1,0 +1,77 @@
+{
+  "project_info": {
+    "project_number": "501881345171",
+    "firebase_url": "https://easylo-ee49d.firebaseio.com",
+    "project_id": "easylo-ee49d",
+    "storage_bucket": "easylo-ee49d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:501881345171:android:21addb0fb5e96417c9e966",
+        "android_client_info": {
+          "package_name": "com.appzz.easylo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "501881345171-er1uiq44qiaf5su1kqneggtp6ks9ccod.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC2LliQpGxrJEcPNufvavc1ravuacnaKWI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "501881345171-er1uiq44qiaf5su1kqneggtp6ks9ccod.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:501881345171:android:b7eeda882c9568c7c9e966",
+        "android_client_info": {
+          "package_name": "com.medlife.easy_lo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "501881345171-m0lcl9o5v56tdpjv6eno7ot1jr3kuske.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.medlife.easy_lo",
+            "certificate_hash": "7c12a6016daced27db829b8a65fd59b80c23c7b2"
+          }
+        },
+        {
+          "client_id": "501881345171-er1uiq44qiaf5su1kqneggtp6ks9ccod.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC2LliQpGxrJEcPNufvavc1ravuacnaKWI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "501881345171-er1uiq44qiaf5su1kqneggtp6ks9ccod.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
