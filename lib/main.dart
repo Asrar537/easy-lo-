@@ -4,7 +4,9 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-void main() {
+void main()  {
+  // WidgetsFlutterBinding.ensureInitialized();
+  // await Firebase.initializeApp();
   runApp(MyApp());
 }
 
@@ -16,36 +18,29 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.indigo,
       ),
-      home:  buildContentHomePage(context),
-    );
-  }
-
-  Widget buildContentHomePage(BuildContext context) {
-    final Future<FirebaseApp> _initialization = Firebase.initializeApp();
-    return FutureBuilder(
-      future: _initialization,
-      builder: (context, snapshot) {
-        if(snapshot.hasError){
-          return Scaffold(
-            body: Center(
-              child: Text(
-                  "Error: ${snapshot.error}"
+      home: FutureBuilder(
+        future: Firebase.initializeApp(),
+        builder: (context, snapshot) {
+          if (snapshot.hasError) {
+            return Scaffold(
+              body: Center(
+                child: Text("Error: ${snapshot.error}"),
               ),
+            );
+          }
+          if (snapshot.connectionState == ConnectionState.done) {
+            return Provider<Database>(
+              create: (_) => FireStoreDatabase(),
+              child: LandingPage(),
+            );
+          }
+          return Container(
+            child: Center(
+              child: CircularProgressIndicator(),
             ),
           );
-        }
-        else if(snapshot.connectionState == ConnectionState.done) {
-          return Provider<Database>(
-            create: (_) => FireStoreDatabase(),
-            child: LandingPage(),
-          );
-        }
-        return Scaffold(
-          body: Center(
-            child: CircularProgressIndicator(),
-          ),
-        );
-      }
+        },
+      ),
     );
   }
 }

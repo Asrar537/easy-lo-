@@ -3,6 +3,8 @@ import 'package:easy_lo/app/Home/module/program_entry_module.dart';
 import 'package:easy_lo/app/Home/module/program_module.dart';
 import 'package:easy_lo/common/image/image.dart';
 import 'package:easy_lo/common/list_item/list_item_builder.dart';
+import 'package:easy_lo/common/pdf_viewer/pdf_module.dart';
+import 'package:easy_lo/common/pdf_viewer/pdf_viewer.dart';
 import 'package:easy_lo/services/StorageBuilder.dart';
 import 'package:easy_lo/services/database.dart';
 import 'package:flutter/cupertino.dart';
@@ -39,8 +41,8 @@ class BookEntriesPage extends StatelessWidget {
             itemBuilder: (context, entries) {
               return BookEntriesTile(
                 entries: entries,
-                image: ImageStructure(uloadMsg: 'Book',future: storageBuilder.getImage(context, entries?.bookUrl)),
-                onTap: () {},
+                image: ImageStructure(uloadMsg: 'Book', future: storageBuilder.getImage(context, entries?.bookUrl)),
+                onTap: () => PdfViewer.show(context,pdf: PdfModule(pdfName: entries.pdfName, pdfUrl: entries.pdfUrl), future: storageBuilder.getPdf(context, entries?.pdfUrl)),
               );
             },
           );

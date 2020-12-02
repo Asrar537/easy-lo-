@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class ImageStructure extends StatelessWidget {
   const ImageStructure({
     this.future,
-    this.uloadMsg,
+    this.uloadMsg = 'Nothing',
   });
   final Future future;
   final String uloadMsg;
@@ -27,7 +27,7 @@ class ImageStructure extends StatelessWidget {
         if (snapshortBookCover.connectionState == ConnectionState.waiting)
           return Center(child: CircularProgressIndicator());
         return Center(
-          child: Text(uloadMsg??''),
+          child: Text(uloadMsg),
         );
       },
     );

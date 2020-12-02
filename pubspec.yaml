@@ -23,20 +23,25 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  firebase_core: ^0.5.2+1
   firebase_auth: ^0.18.0+1
-  firebase_core: ^0.5.2
+  firebase_storage: ^5.1.0
   cloud_firestore: ^0.14.2
   provider: ^4.3.2+2
   google_nav_bar: ^3.1.0
-  line_icons: ^0.2.0
-  sliver_fill_remaining_box_adapter: ^0.1.1
-  #stroage related work
-  firebase_storage: ^5.1.0
-  #for pdf
-  http: ^0.12.2
-  flutter_full_pdf_viewer: ^1.0.6
+  flutter_pdfview: ^1.0.3+8  #for PDFViewer
+  flutter_cached_pdfview: ^0.3.1 #for PDF().fromURl
+  #flutter_plugin_pdf_viewer: ^1.0.7
+  #  line_icons: ^0.2.0
 
+#  http: ^0.12.2
+#  flutter_full_pdf_viewer: ^1.0.6
+#  #flutter_plugin_pdf_viewer: ^1.0.7
+#  flutter_cached_pdfview: ^0.3.1
+  #admin
+  #file_picker: ^2.1.0
 
+  #  sliver_fill_remaining_box_adapter: ^0.1.1
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
