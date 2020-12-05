@@ -31,13 +31,17 @@ dependencies:
   google_nav_bar: ^3.1.0
   flutter_pdfview: ^1.0.3+8  #for PDFViewer
   flutter_cached_pdfview: ^0.3.1 #for PDF().fromURl
+  step_progress_indicator: ^0.2.5+8 #for loading widget
+  http: ^0.12.2 #for youtube video
+  youtube_player_flutter: ^7.0.0+7
+  cached_network_image: ^2.4.1 #for youtube video
+  webview_flutter: ^1.0.7 #for html
   #flutter_plugin_pdf_viewer: ^1.0.7
   #  line_icons: ^0.2.0
 
-#  http: ^0.12.2
-#  flutter_full_pdf_viewer: ^1.0.6
-#  #flutter_plugin_pdf_viewer: ^1.0.7
-#  flutter_cached_pdfview: ^0.3.1
+  #  flutter_full_pdf_viewer: ^1.0.6
+  #  #flutter_plugin_pdf_viewer: ^1.0.7
+  #  flutter_cached_pdfview: ^0.3.1
   #admin
   #file_picker: ^2.1.0
 

@@ -6,14 +6,10 @@ class ProgramEntriesModule {
   ProgramEntriesModule(
       {@required this.id,
       @required this.name,
-      this.pdfName,
-      this.pdfUrl,
       this.dec,
       this.bookUrl});
   final String id;
   final String name;
-  final String pdfName;
-  final String pdfUrl;
   final String dec;
   final String bookUrl;
 
@@ -24,18 +20,14 @@ class ProgramEntriesModule {
     }
     final String name = data['name'];
     final String dec = data['dec'];
-    final String pdfName = data['pdfName'];
-    final String pdfUrl = data['pdf'];
     final String bookUrl = data['book_url'];
-    return ProgramEntriesModule(id: documentId, name: name, pdfName: pdfName ,pdfUrl: pdfUrl, dec: dec, bookUrl: bookUrl);
+    return ProgramEntriesModule(id: documentId, name: name, dec: dec, bookUrl: bookUrl);
   }
 
   Map<String, dynamic> toMap() {
     return {
       'name': name,
       'dec': dec,
-      'pdfName': pdfName,
-      'pdf': pdfUrl,
       'book_url': bookUrl,
     };
   }

@@ -1,4 +1,3 @@
-import 'package:easy_lo/app/Home/module/program_module.dart';
 import 'package:flutter/material.dart';
 
 class ProgramListTile extends StatelessWidget {
@@ -6,16 +5,18 @@ class ProgramListTile extends StatelessWidget {
     Key key,
     @required this.program,
     @required this.onTap,
+    this.leading,
   }) : super(key: key);
 
-  final ProgramModule program;
+  final program;
   final VoidCallback onTap;
+  final Widget leading;
 
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      leading: FlutterLogo(),
-      title: Text(program.name != null ? program.name : 'No Name'),
+      leading: leading,
+      title: Text(program?.name ?? 'No Name'),
       trailing: Icon(Icons.chevron_right),
       onTap: onTap,
     );

@@ -36,6 +36,7 @@ class ProgramPage extends StatelessWidget {
           itemBuilder: (context, program) {
             //TODO:: disable in admin page
             return ProgramListTile(
+              leading: const FlutterLogo(),
               program: program,
               onTap: () => ProgramEntriesPage.show(context, program: program, database: database),
             );

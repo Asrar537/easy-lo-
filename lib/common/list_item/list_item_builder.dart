@@ -26,6 +26,7 @@ class ListItemBuilder<T> extends StatelessWidget {
         massage: 'Can\'t load items right now',
       );
     }
+    print('in loading main');
     return Center(child: CircularProgressIndicator());
   }
 

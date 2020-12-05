@@ -10,18 +10,20 @@ import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:provider/provider.dart';
 
 class ProgramEntriesPage extends StatefulWidget {
-  ProgramEntriesPage({this.database, this.program});
+  ProgramEntriesPage({this.database});
   final Database database;
-  final ProgramModule program;
+  //final ProgramModule program;
   final StorageBuilder _storageBuilder = StorageWidgetBuilder();
 
   static void show(BuildContext context,
       {ProgramModule program, Database database}) {
     Navigator.of(context).push(
       CupertinoPageRoute(
-        builder: (context) => ProgramEntriesPage(
-          database: database,
-          program: program,
+        builder: (context) => Provider<ProgramModule>(
+          create: (_) => program,
+          child: ProgramEntriesPage(
+            database: database,
+          ),
         ),
       ),
     );
@@ -31,15 +33,19 @@ class ProgramEntriesPage extends StatefulWidget {
   _ProgramEntriesPageState createState() => _ProgramEntriesPageState();
 }
 
-class _ProgramEntriesPageState extends State<ProgramEntriesPage> {
+class _ProgramEntriesPageState extends State<ProgramEntriesPage> with AutomaticKeepAliveClientMixin<ProgramEntriesPage> {
+  @override
+  bool get wantKeepAlive => true;
+
   TabItemsTop _currentPage = TabItemsTop.book;
   PageController controller = PageController();
   ScrollController scrollController = ScrollController();
   int _index = 0;
 
   Map<TabItemsTop, WidgetBuilder> get widgetBuilder {
+    //final program = Provider.of<ProgramModule>(context);
     return {
-      TabItemsTop.book: (context) => BookEntriesPage(program: widget.program, storageBuilder: widget._storageBuilder),
+      TabItemsTop.book: (context) => BookEntriesPage(storageBuilder: widget._storageBuilder),
       TabItemsTop.video: (context) => Container(),
       TabItemsTop.syllabus: (context) => Container(),
       TabItemsTop.notes: (context) => Container(),
@@ -74,10 +80,11 @@ class _ProgramEntriesPageState extends State<ProgramEntriesPage> {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context)  {
     final database = Provider.of<Database>(context, listen: false);
+    final program = Provider.of<ProgramModule>(context, listen: false);
     return SliverPage(
-      title: Text(widget.program?.name ?? 'Programs'),
+      title: Text(program?.name ?? 'Programs'),
       currentTab: _currentPage,
       selectTab: selectTab,
       gNav: GNav(

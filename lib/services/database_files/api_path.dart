@@ -4,4 +4,7 @@ class APIPath{
   //
   // static String subjectEntry(String uid, String entId) =>'users/$uid/entries/$entId';
    static String programEntries() =>'book';
+   static String pdf()=> 'pdf';
+   static String video()=> 'video';
+
 }

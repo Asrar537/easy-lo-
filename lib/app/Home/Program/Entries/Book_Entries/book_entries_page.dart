@@ -1,10 +1,9 @@
+import 'package:easy_lo/app/Home/Program/Entries/Book_Entries/Book/book_page.dart';
 import 'package:easy_lo/app/Home/Program/Entries/Book_Entries/book_entries_tile.dart';
 import 'package:easy_lo/app/Home/module/program_entry_module.dart';
 import 'package:easy_lo/app/Home/module/program_module.dart';
 import 'package:easy_lo/common/image/image.dart';
 import 'package:easy_lo/common/list_item/list_item_builder.dart';
-import 'package:easy_lo/common/pdf_viewer/pdf_module.dart';
-import 'package:easy_lo/common/pdf_viewer/pdf_viewer.dart';
 import 'package:easy_lo/services/StorageBuilder.dart';
 import 'package:easy_lo/services/database.dart';
 import 'package:flutter/cupertino.dart';
@@ -12,9 +11,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class BookEntriesPage extends StatelessWidget {
-  const BookEntriesPage({Key key, this.program, this.storageBuilder})
+  const BookEntriesPage({Key key, this.storageBuilder})
       : super(key: key);
-  final ProgramModule program;
   final StorageBuilder storageBuilder;
 
   // static void show(BuildContext context,
@@ -32,9 +30,12 @@ class BookEntriesPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final database = Provider.of<Database>(context, listen: false);
+    final program = Provider.of<ProgramModule>(context, listen: false);
+
+    
     return Container(
       child: StreamBuilder<List<ProgramEntriesModule>>(
-        stream: database.entriesStream(program: program),
+        stream: database.entriesStream(programId: program?.id??null),
         builder: (context, snapshot) {
           return ListItemBuilder(
             snapshot: snapshot,
@@ -42,7 +43,7 @@ class BookEntriesPage extends StatelessWidget {
               return BookEntriesTile(
                 entries: entries,
                 image: ImageStructure(uloadMsg: 'Book', future: storageBuilder.getImage(context, entries?.bookUrl)),
-                onTap: () => PdfViewer.show(context,pdf: PdfModule(pdfName: entries.pdfName, pdfUrl: entries.pdfUrl), future: storageBuilder.getPdf(context, entries?.pdfUrl)),
+                onTap: () => BookPage.show(context,entries: entries, storageBuilder: storageBuilder),
               );
             },
           );

@@ -1,5 +1,7 @@
 import 'package:easy_lo/app/Home/module/program_entry_module.dart';
 import 'package:easy_lo/app/Home/module/program_module.dart';
+import 'package:easy_lo/app/Home/module/program_pdf_module.dart';
+import 'package:easy_lo/app/Home/module/program_video_module.dart';
 import 'package:easy_lo/services/database_files/api_path.dart';
 import 'package:easy_lo/services/firestore_service/firestore_service.dart';
 
@@ -8,8 +10,10 @@ abstract class Database {
   Stream<List<ProgramModule>> programStream();
   // Future<void> deleteSubject(Subject subject);
   // Future<void> setEntries(Entry entry);
-  Stream<List<ProgramEntriesModule>> entriesStream({ProgramModule program});
+  Stream<List<ProgramEntriesModule>> entriesStream({String programId});
   // Future<void> deleteEntry(Entry entry);
+  Stream<List<ProgramPDFModule>> pdfStream({String bookId});
+  Stream<List<ProgramVideoModule>> videoStream({String bookId});
 }
 
 class FireStoreDatabase implements Database {
@@ -43,14 +47,30 @@ class FireStoreDatabase implements Database {
   //     );
   //
   @override
-  Stream<List<ProgramEntriesModule>> entriesStream({ProgramModule program}) {
+  Stream<List<ProgramEntriesModule>> entriesStream({String programId}) {
     return _firetoreService.readCollection<ProgramEntriesModule>(
       path: APIPath.programEntries(),
       builder: (data, documentId) => ProgramEntriesModule.fromMap(data, documentId),
-      queryBuilder: program != null ? (query) => query.where('proId', isEqualTo: program.id,) : null,
+      queryBuilder: programId != null ? (query) => query.where('proId', isEqualTo: programId,) : null,
     );
   }
   // @override
   // Future<void> deleteEntry(Entry entry) async => await _firetoreService
   //     .deleteData(path: APIPath.subjectEntry(uid, entry.id));
+
+  @override
+  Stream<List<ProgramPDFModule>> pdfStream({String bookId}) =>
+      _firetoreService.readCollection<ProgramPDFModule>(
+        path: APIPath.pdf(),
+        builder: (data, documentId) => ProgramPDFModule.fromMap(data, documentId),
+        queryBuilder: bookId != null ? (query) => query.where('bookId', isEqualTo: bookId,) : null,
+      );
+
+  @override
+  Stream<List<ProgramVideoModule>> videoStream({String bookId}) =>
+      _firetoreService.readCollection<ProgramVideoModule>(
+        path: APIPath.video(),
+        builder: (data, documentId) => ProgramVideoModule.fromMap(data, documentId),
+        queryBuilder: bookId != null ? (query) => query.where('bookId', isEqualTo: bookId,) : null,
+      );
 }
