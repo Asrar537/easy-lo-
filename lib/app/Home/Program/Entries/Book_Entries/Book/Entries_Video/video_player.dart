@@ -14,18 +14,13 @@ class VideoPlayerScreen extends StatefulWidget {
 }
 
 class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
-  //
   YoutubePlayerController _controller;
   bool _isPlayerReady;
-
+  bool _fullScreen;
   @override
   void initState() {
     super.initState();
-    SystemChrome.setPreferredOrientations([
-      DeviceOrientation.landscapeRight,
-      DeviceOrientation.landscapeLeft,
-    ]);
-    SystemChrome.setEnabledSystemUIOverlays([]);
+    _fullScreen = false;
     _isPlayerReady = false;
     _controller = YoutubePlayerController(
       initialVideoId: YoutubePlayer.convertUrlToId(widget.videoUrl),
@@ -37,9 +32,25 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
   }
 
   void _listener() {
-    if (_isPlayerReady && mounted && !_controller.value.isFullScreen) {
-      //
-    }
+    // if (_controller.value.isFullScreen) {
+    //   setState(() {
+    //     SystemChrome.setPreferredOrientations([
+    //       DeviceOrientation.landscapeRight,
+    //       DeviceOrientation.landscapeLeft,
+    //     ]);
+    //     SystemChrome.setEnabledSystemUIOverlays([]);
+    //     _fullScreen = true;
+    //   });
+    // }
+    // else{
+    //   setState(() {
+    //     SystemChrome.setPreferredOrientations([
+    //       DeviceOrientation.portraitUp,
+    //     ]);
+    //     SystemChrome.setEnabledSystemUIOverlays(SystemUiOverlay.values);
+    //     _fullScreen = false;
+    //   });
+    // }
   }
 
   @override
@@ -61,29 +72,36 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
   @override
   Widget build(BuildContext context) {
     return OrientationBuilder(
-      builder:(context, orientation) {
-        return Container(
-          width: MediaQuery.of(context).size.width,
-          height: MediaQuery.of(context).size.height,
-          child: Container(
-            child: WebView(
-              initialUrl: "https://www.youtube.com/embed/80pRyn7fZRk?feature=oembed",
-              javascriptMode: JavascriptMode.unrestricted,
+      builder: (BuildContext context, Orientation orientation){
+        if(orientation == Orientation.landscape){
+          return Scaffold(
+            body: _youtubePlayer(),
+          );
+        }
+        else{
+          return Scaffold(
+            appBar: _fullScreen ? null: AppBar(
+              title: Text('usama'),
             ),
-          ),
-        );
-      }
+            body: Container(
+              child: _youtubePlayer(),
+            ),
+          );
+        }
+      },
+    );
+  }
+
+  Widget _youtubePlayer() {
+    return YoutubePlayer(
+      controller: _controller,
+      showVideoProgressIndicator: true,
+      onReady: () {
+        _isPlayerReady = true;
+      },
     );
   }
 }
-
-// YoutubePlayerController _controller = YoutubePlayerController(
-//   initialVideoId: YoutubePlayer.convertUrlToId(video?.VUrl??''),
-//   flags: YoutubePlayerFlags(
-//     autoPlay: false,
-//     mute: true,
-//   ),
-// );
 
 // YoutubePlayer(
 // controller: _controller,
@@ -95,11 +113,14 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
 // ),
 // )
 
-// YoutubePlayer(
-//   controller: _controller,
-//   showVideoProgressIndicator: true,
-//   onReady: () {
-//     print('Player is ready.');
-//     _isPlayerReady = true;
-//   },
-// ),
+
+// return Container(
+//   width: MediaQuery.of(context).size.width,
+//   height: MediaQuery.of(context).size.height,
+//   child: Container(
+//     child: WebView(
+//       initialUrl: "https://www.youtube.com/embed/80pRyn7fZRk?feature=oembed",
+//       javascriptMode: JavascriptMode.unrestricted,
+//     ),
+//   ),
+// );
