@@ -25,10 +25,6 @@ class ImageStructure extends StatelessWidget {
             placeholder: (context, url) => Center(child: CircularProgressIndicator()),
             errorWidget: (context, url, error) => Icon(Icons.error),
           );
-          //   Image(
-          //   image: snapshortBookCover.data,
-          // );
-
         if (snapshortBookCover.connectionState == ConnectionState.waiting)
           return Center(child: CircularProgressIndicator());
         return Center(

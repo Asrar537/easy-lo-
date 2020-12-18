@@ -82,30 +82,3 @@ class _PdfViewerState extends State<PdfViewer> {
     );
   }
 }
-
-// print('url load');
-// return FutureBuilder(
-//   future: PDFDocument.fromURL(_url),
-//   builder: (context, pdf) {
-//     if(pdf.hasData){
-//       return PDFViewer(document: pdf.data);
-//     }
-//     if(pdf.hasError){
-//       print('usama');
-//       print('Error: '+ pdf.error);
-//     }
-//     return Center(child: CircularProgressIndicator());
-//   },
-// );
-
-// //for admin pdf picker
-// Future getPdfUpload() async {
-//   // var rad = new Random();
-//   // String randomName = DateTime.now().toIso8601String();
-//   // for(int i=0; i< 20; i++){
-//   //   randomName += rad.nextInt(100).toString();
-//   // }
-//   // File file = await FilePicker.platform.pickFiles(type: FileType.any);
-//   // String fileName = '${randomName}.pdf';
-//   // savePdf();
-// }

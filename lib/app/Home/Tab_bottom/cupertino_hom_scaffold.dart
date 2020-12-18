@@ -22,8 +22,7 @@ class CupertinoHomeScaffold extends StatelessWidget {
       tabBar: CupertinoTabBar(
         items: [
           _buildTabItem(TabItemsBottom.home),
-          _buildTabItem(TabItemsBottom.entries),
-          _buildTabItem(TabItemsBottom.account),
+          _buildTabItem(TabItemsBottom.library),
         ],
         onTap: (index) => selectTab(TabItemsBottom.values[index]),
       ),
@@ -43,9 +42,6 @@ class CupertinoHomeScaffold extends StatelessWidget {
         color: color,
       ),
       label: itemData.title,
-      // Text(
-      //   style: TextStyle(color: color),
-      // ),
     );
   }
 }

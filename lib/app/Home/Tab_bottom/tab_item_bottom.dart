@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 
 enum TabItemsBottom{
   home,
-  entries,
-  account,
+  library,
 }
 
 class TabItemData{
@@ -14,7 +13,6 @@ class TabItemData{
 
   static Map<TabItemsBottom, TabItemData> allTabs = {
     TabItemsBottom.home: TabItemData(icon: Icons.home, title: 'Home'),
-    TabItemsBottom.entries: TabItemData(icon: Icons.view_headline, title: 'Entries'),
-    TabItemsBottom.account: TabItemData(icon: Icons.person, title: 'Account'),
+    TabItemsBottom.library: TabItemData(icon: Icons.local_library, title: 'Library'),
   };
 }

@@ -20,5 +20,4 @@ class HttpServices {
       return null;
     }
   }
-
 }

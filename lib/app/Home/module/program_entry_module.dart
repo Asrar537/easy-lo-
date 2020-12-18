@@ -1,8 +1,8 @@
+import 'dart:ui';
+
 import 'package:meta/meta.dart';
 
 class ProgramEntriesModule {
-  // TODO::id only need in admin
-  // TODO::id many not be need
   ProgramEntriesModule(
       {@required this.id,
       @required this.name,
@@ -12,6 +12,8 @@ class ProgramEntriesModule {
   final String name;
   final String dec;
   final String bookUrl;
+  Future<String> bookCoverDownladUrl;
+  Image image;
 
   factory ProgramEntriesModule.fromMap(
       Map<String, dynamic> data, String documentId) {

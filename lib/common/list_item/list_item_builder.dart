@@ -20,7 +20,9 @@ class ListItemBuilder<T> extends StatelessWidget {
       } else {
         return EmptyContent();
       }
-    } else if (snapshot.hasError) {
+    }
+    if (snapshot.hasError) {
+      print(snapshot.error);
       return EmptyContent(
         title: 'Something went wrong',
         massage: 'Can\'t load items right now',
@@ -32,6 +34,8 @@ class ListItemBuilder<T> extends StatelessWidget {
 
   Widget _buildList(List<T> items) {
     return ListView.separated(
+      scrollDirection: Axis.vertical,
+      shrinkWrap: true,
       itemCount: items.length,
       separatorBuilder: (context, index) => Divider(height: 0.6,),
       itemBuilder: (context, index) => itemBuilder(context, items[index]),

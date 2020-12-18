@@ -1,8 +1,6 @@
 import 'package:meta/meta.dart';
 
 class ProgramPDFModule {
-  // TODO::id only need in admin
-  // TODO::id many not be need
   ProgramPDFModule(
       {@required this.id,
         this.name,
@@ -19,7 +17,7 @@ class ProgramPDFModule {
     if (data == null) {
       return null;
     }
-    final String name = data['pdfName'];
+    final String name = data['name'];
     final String pdfUrl = data['pdfUrl'];
     final int pdfCata = data['pdfCata'];
     return ProgramPDFModule(id: documentId, name: name ,pdfUrl: pdfUrl, pdfCata: pdfCata);
@@ -27,7 +25,7 @@ class ProgramPDFModule {
 
   Map<String, dynamic> toMap() {
     return {
-      'pdfName': name,
+      'name': name,
       'pdfUrl': pdfUrl,
       'pdfCata': pdfCata,
     };

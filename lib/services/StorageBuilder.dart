@@ -13,10 +13,7 @@ class StorageWidgetBuilder implements StorageBuilder{
   Future<String> getImage(BuildContext context, String bookUrl) async {
     String bookCover;
     await _firebaseStorageServices.loadFromStorage(context, bookUrl).then((value) {
-      //bookCover = Image.network(
       bookCover = value.toString();
-      //   fit: BoxFit.scaleDown,
-      // );
     });
     return bookCover;
   }

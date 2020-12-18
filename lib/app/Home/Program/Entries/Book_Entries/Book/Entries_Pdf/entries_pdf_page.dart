@@ -9,8 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class EntriesPDFPage extends StatelessWidget {
-  const EntriesPDFPage({Key key, this.storageBuilder}) : super(key: key);
-  final StorageBuilder storageBuilder;
+  const EntriesPDFPage({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -19,10 +18,11 @@ class EntriesPDFPage extends StatelessWidget {
 
   Widget _buildContent(BuildContext context) {
     final entries = Provider.of<ProgramEntriesModule>(context, listen: false);
-
     final database = Provider.of<Database>(context, listen: false);
+    final storageBuilder = Provider.of<StorageBuilder>(context, listen: false);
+
     return StreamBuilder<List<ProgramPDFModule>>(
-      stream: database.pdfStream(bookId: entries.id),
+      stream: database.pdfBookStream(bookId: entries.id),
       builder: (context, snapshot) {
         return ListItemBuilder<ProgramPDFModule>(
           snapshot: snapshot,

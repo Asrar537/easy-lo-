@@ -1,76 +1,126 @@
 import 'package:easy_lo/app/Home/module/program_entry_module.dart';
 import 'package:easy_lo/app/Home/module/program_module.dart';
 import 'package:easy_lo/app/Home/module/program_pdf_module.dart';
+import 'package:easy_lo/app/Home/module/program_sallybus_module.dart';
 import 'package:easy_lo/app/Home/module/program_video_module.dart';
 import 'package:easy_lo/services/database_files/api_path.dart';
 import 'package:easy_lo/services/firestore_service/firestore_service.dart';
 
 abstract class Database {
-  //Future<void> setSubject(Subject subjectData);
   Stream<List<ProgramModule>> programStream();
-  // Future<void> deleteSubject(Subject subject);
-  // Future<void> setEntries(Entry entry);
   Stream<List<ProgramEntriesModule>> entriesStream({String programId});
-  // Future<void> deleteEntry(Entry entry);
-  Stream<List<ProgramPDFModule>> pdfStream({String bookId});
+  Stream<List<ProgramPDFModule>> pdfBookStream({String bookId});
+  Stream<List<ProgramPDFModule>> pdfNotesStream({String bookId});
+  Stream<List<ProgramSallybusModule>> syllabusStream({String bookId});
   Stream<List<ProgramVideoModule>> videoStream({String bookId});
+
+  List<Stream<List<dynamic>>> Search({String queryValue});
 }
 
 class FireStoreDatabase implements Database {
-  // FireStoreDatabase({@required this.uid}) : assert(uid != null);
-  // final String uid;
   final _firetoreService = FirestoreService.instance;
-  //
-  // @override
-  // Future<void> setSubject(Subject subjectData) async =>
-  //     await _firetoreService.setData(
-  //       path: APIPath.subject(uid, subjectData.id),
-  //       data: subjectData.toMap(),
-  //     );
-  //
-  // @override
-  // Future<void> deleteSubject(Subject subject) async =>
-  //     await _firetoreService.deleteData(path: APIPath.subject(uid, subject.id));
-
   @override
   Stream<List<ProgramModule>> programStream() =>
       _firetoreService.readCollection<ProgramModule>(
         path: APIPath.programs(),
         builder: (data, documentId) => ProgramModule.fromMap(data, documentId),
+        sort: (lhs, rhs) => lhs.name.compareTo(rhs.name),
       );
-
-  // //entries
-  // @override
-  // Future<void> setEntries(Entry entry) async => await _firetoreService.setData(
-  //       path: APIPath.subjectEntry(uid, entry.id),
-  //       data: entry.toMap(),
-  //     );
-  //
   @override
   Stream<List<ProgramEntriesModule>> entriesStream({String programId}) {
     return _firetoreService.readCollection<ProgramEntriesModule>(
       path: APIPath.programEntries(),
-      builder: (data, documentId) => ProgramEntriesModule.fromMap(data, documentId),
-      queryBuilder: programId != null ? (query) => query.where('proId', isEqualTo: programId,) : null,
+      builder: (data, documentId) =>
+          ProgramEntriesModule.fromMap(data, documentId),
+      queryBuilder: programId != null
+          ? (query) => query.where(
+                'proId',
+                isEqualTo: programId,
+              )
+          : null,
+      sort: (lhs, rhs) => lhs.name.compareTo(rhs.name),
     );
   }
-  // @override
-  // Future<void> deleteEntry(Entry entry) async => await _firetoreService
-  //     .deleteData(path: APIPath.subjectEntry(uid, entry.id));
+  Stream<List<ProgramPDFModule>> _pdfStream({String bookId, String path}) =>
+      _firetoreService.readCollection<ProgramPDFModule>(
+        path: path,
+        builder: (data, documentId) =>
+            ProgramPDFModule.fromMap(data, documentId),
+        queryBuilder: bookId != null
+            ? (query) => query.where(
+                  'bookId',
+                  isEqualTo: bookId,
+                )
+            : null,
+        sort: (lhs, rhs) => lhs.pdfCata.compareTo(rhs.pdfCata),
+      );
 
   @override
-  Stream<List<ProgramPDFModule>> pdfStream({String bookId}) =>
-      _firetoreService.readCollection<ProgramPDFModule>(
-        path: APIPath.pdf(),
-        builder: (data, documentId) => ProgramPDFModule.fromMap(data, documentId),
-        queryBuilder: bookId != null ? (query) => query.where('bookId', isEqualTo: bookId,) : null,
+  Stream<List<ProgramPDFModule>> pdfBookStream({String bookId}) =>
+      _pdfStream(bookId: bookId, path: APIPath.pdf());
+
+  @override
+  Stream<List<ProgramPDFModule>> pdfNotesStream({String bookId, String path}) =>
+      _pdfStream(bookId: bookId, path: APIPath.note());
+
+  @override
+  Stream<List<ProgramSallybusModule>> syllabusStream({String bookId}) =>
+      _firetoreService.readCollection<ProgramSallybusModule>(
+        path: APIPath.syllabus(),
+        builder: (data, documentId) => ProgramSallybusModule.fromMap(data, documentId),
       );
 
   @override
   Stream<List<ProgramVideoModule>> videoStream({String bookId}) =>
       _firetoreService.readCollection<ProgramVideoModule>(
         path: APIPath.video(),
-        builder: (data, documentId) => ProgramVideoModule.fromMap(data, documentId),
-        queryBuilder: bookId != null ? (query) => query.where('bookId', isEqualTo: bookId,) : null,
+        builder: (data, documentId) =>
+            ProgramVideoModule.fromMap(data, documentId),
+        queryBuilder: bookId != null
+            ? (query) => query.where(
+                  'bookId',
+                  isEqualTo: bookId,
+                )
+            : null,
       );
+
+  @override
+  List<Stream<List<dynamic>>> Search({String queryValue}) {
+
+    final List<Stream<List<dynamic>>> resultList = List();
+    resultList.add(_firetoreService.readCollectionForSearch<ProgramModule>(
+      path: APIPath.programs(),
+      builder: (data, documentId) => ProgramModule.fromMap(data, documentId),
+      queryKey: queryValue.toLowerCase(),
+      lookIn: ['name'],
+    ));
+    resultList
+        .add(_firetoreService.readCollectionForSearch<ProgramEntriesModule>(
+      path: APIPath.programEntries(),
+      builder: (data, documentId) =>
+          ProgramEntriesModule.fromMap(data, documentId),
+      queryKey: queryValue.toLowerCase(),
+      lookIn: ['name', 'dec'],
+    ));
+    resultList.add(_firetoreService.readCollectionForSearch<ProgramVideoModule>(
+      path: APIPath.video(),
+      builder: (data, documentId) =>
+          ProgramVideoModule.fromMap(data, documentId),
+      queryKey: queryValue.toLowerCase(),
+      lookIn: ['name', 'dec'],
+    ));
+    resultList.add(_firetoreService.readCollectionForSearch<ProgramPDFModule>(
+      path: APIPath.pdf(),
+      builder: (data, documentId) => ProgramPDFModule.fromMap(data, documentId),
+      queryKey: queryValue.toLowerCase(),
+      lookIn: ['name'],
+    ));
+    resultList.add(_firetoreService.readCollectionForSearch<ProgramPDFModule>(
+      path: APIPath.note(),
+      builder: (data, documentId) => ProgramPDFModule.fromMap(data, documentId),
+      queryKey: queryValue.toLowerCase(),
+      lookIn: ['name'],
+    ));
+    return resultList;
+  }
 }

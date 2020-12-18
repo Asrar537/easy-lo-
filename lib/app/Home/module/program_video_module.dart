@@ -1,18 +1,16 @@
 import 'package:meta/meta.dart';
 
 class ProgramVideoModule {
-  // TODO::id only need in admin
-  // TODO::id many not be need
   ProgramVideoModule({
     @required this.id,
     @required this.name,
-    this.VDec,
+    this.dec,
     this.VUrl,
     this.VCata,
   });
   final String id;
   final String name;
-  final String VDec;
+  final String dec;
   final String VUrl;
   final int VCata;
 
@@ -21,14 +19,14 @@ class ProgramVideoModule {
     if (data == null) {
       return null;
     }
-    final String name = data['VName'];
-    final String VDec = data['VDec'];
+    final String name = data['name'];
+    final String dec = data['dec'];
     final String VUrl = data['VUrl'];
     final int VCata = data['VCata'];
     return ProgramVideoModule(
       id: documentId,
       name: name,
-      VDec: VDec,
+      dec: dec,
       VUrl: VUrl,
       VCata: VCata,
     );
@@ -37,7 +35,7 @@ class ProgramVideoModule {
   Map<String, dynamic> toMap() {
     return {
       'name': name,
-      'VDec': VDec,
+      'dec': dec,
       'VUrl': VUrl,
       'VCata': VCata,
     };

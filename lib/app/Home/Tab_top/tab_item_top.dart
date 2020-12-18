@@ -1,13 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:google_nav_bar/google_nav_bar.dart';
 
 enum TabItemsTop {
-  book,
   video,
+  pdf,
   syllabus,
   notes,
-  info,
 }
 
 class TabItemTopData {
@@ -26,11 +24,9 @@ class TabItemTopData {
   final double gap;
 
   static Map<TabItemsTop, TabItemTopData> allTabs = {
-    TabItemsTop.book: TabItemTopData(icon: Icons.book, title: 'Book', color: Colors.yellow),
     TabItemsTop.video: TabItemTopData(icon: Icons.ondemand_video_outlined, title: 'Video', color: Colors.orangeAccent),
+    TabItemsTop.pdf: TabItemTopData(icon: Icons.picture_as_pdf, title: 'PDF', color: Colors.yellow),
     TabItemsTop.syllabus: TabItemTopData(icon: Icons.list, title: 'Syllabus', color: Colors.deepOrangeAccent),
     TabItemsTop.notes: TabItemTopData(icon: Icons.note, title: 'Notes', color: Colors.brown),
-    TabItemsTop.info: TabItemTopData(icon: Icons.info, title: 'Info', color: Colors.red),
-
   };
 }

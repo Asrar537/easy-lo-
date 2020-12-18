@@ -1,13 +1,24 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:webview_flutter/webview_flutter.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 class VideoPlayerScreen extends StatefulWidget {
   //
-  VideoPlayerScreen({this.videoTitle, this.videoUrl});
-  final String videoUrl;
+  VideoPlayerScreen({this.videoTitle, this.videoId});
+  final String videoId;
   final String videoTitle;
+
+  static void show(BuildContext context, {String videoUrl, String title}) {
+    Navigator.of(context, rootNavigator: true).push(
+      CupertinoPageRoute(
+        builder: (context) => VideoPlayerScreen(
+          videoId: videoUrl,
+          videoTitle: title,
+        ),
+      ),
+    );
+  }
 
   @override
   _VideoPlayerScreenState createState() => _VideoPlayerScreenState();
@@ -15,15 +26,13 @@ class VideoPlayerScreen extends StatefulWidget {
 
 class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
   YoutubePlayerController _controller;
-  bool _isPlayerReady;
   bool _fullScreen;
   @override
   void initState() {
     super.initState();
     _fullScreen = false;
-    _isPlayerReady = false;
     _controller = YoutubePlayerController(
-      initialVideoId: YoutubePlayer.convertUrlToId(widget.videoUrl),
+      initialVideoId: YoutubePlayer.convertUrlToId(widget.videoId),
       flags: YoutubePlayerFlags(
         mute: false,
         autoPlay: true,
@@ -32,25 +41,6 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
   }
 
   void _listener() {
-    // if (_controller.value.isFullScreen) {
-    //   setState(() {
-    //     SystemChrome.setPreferredOrientations([
-    //       DeviceOrientation.landscapeRight,
-    //       DeviceOrientation.landscapeLeft,
-    //     ]);
-    //     SystemChrome.setEnabledSystemUIOverlays([]);
-    //     _fullScreen = true;
-    //   });
-    // }
-    // else{
-    //   setState(() {
-    //     SystemChrome.setPreferredOrientations([
-    //       DeviceOrientation.portraitUp,
-    //     ]);
-    //     SystemChrome.setEnabledSystemUIOverlays(SystemUiOverlay.values);
-    //     _fullScreen = false;
-    //   });
-    // }
   }
 
   @override
@@ -97,7 +87,6 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
       controller: _controller,
       showVideoProgressIndicator: true,
       onReady: () {
-        _isPlayerReady = true;
       },
     );
   }

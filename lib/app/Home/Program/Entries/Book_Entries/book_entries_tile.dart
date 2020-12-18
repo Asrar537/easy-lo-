@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:easy_lo/app/Home/module/program_entry_module.dart';
 import 'package:flutter/material.dart';
 
@@ -5,12 +6,12 @@ class BookEntriesTile extends StatelessWidget {
   const BookEntriesTile({
     Key key,
     @required this.entries,
-    @required this.image,
+    //@required this.image,
     @required this.onTap,
   }) : super(key: key);
 
   final ProgramEntriesModule entries;
-  final Widget image;
+  //final String image;
   final VoidCallback onTap;
 
   @override
@@ -52,7 +53,11 @@ class BookEntriesTile extends StatelessWidget {
                       child: Container(
                         height: 164,
                         width: 110,
-                        child: image,
+                        child: CachedNetworkImage(
+                          imageUrl: entries.bookUrl,
+                          placeholder: (context, url) => Center(child: CircularProgressIndicator()),
+                          errorWidget: (context, url, error) => Icon(Icons.error),
+                        ),
                       )
                     ),
                     Flexible(
@@ -83,42 +88,6 @@ class BookEntriesTile extends StatelessWidget {
                               overflow: TextOverflow.ellipsis,
                               maxLines: 2,
                             ),
-                            // SizedBox(
-                            //   height: 20,
-                            // ),
-                            // Align(
-                            //   alignment: Alignment.bottomRight,
-                            //   child: InkWell(
-                            //     //on pressed
-                            //     onTap: onTap,
-                            //     child: Container(
-                            //       margin: EdgeInsets.only(right: 20.0),
-                            //       height: 50,
-                            //       width: 110,
-                            //       decoration: BoxDecoration(
-                            //           borderRadius: BorderRadius.only(
-                            //             topRight: Radius.circular(15.0),
-                            //             bottomLeft: Radius.circular(15.0),
-                            //             bottomRight: Radius.circular(15.0),
-                            //           ),
-                            //           color: Colors.yellow,
-                            //           boxShadow: [
-                            //             BoxShadow(
-                            //                 color: Colors.black12,
-                            //                 blurRadius: 12,
-                            //                 offset: Offset(0, 6))
-                            //           ]),
-                            //       child: Center(
-                            //         child: Text(
-                            //           'Get',
-                            //           style: TextStyle(
-                            //             fontSize: 17,
-                            //           ),
-                            //         ),
-                            //       ),
-                            //     ),
-                            //   ),
-                            // ),
                           ],
                         ),
                       ),

@@ -21,6 +21,7 @@ class FirestoreService {
     Query queryBuilder(Query query),
     int sort(T lhs, T rhs),
   }) {
+
     Query reference = FirebaseFirestore.instance.collection(path);
     if (queryBuilder != null) {
       reference = queryBuilder(reference);
@@ -31,6 +32,35 @@ class FirestoreService {
           .map((e) {
             return builder(e.data(), e.id);
           }).where((values) => values!=null)
+          .toList();
+      if (sort != null) {
+        result.sort(sort);
+      }
+      return result;
+    });
+  }
+
+  Stream<List<T>> readCollectionForSearch<T>({
+    @required String path,
+    @required T builder(Map<String, dynamic> data, String documentId),
+    String queryKey,
+    List<String> lookIn,
+    int sort(T lhs, T rhs),
+  }) {
+    Stream<QuerySnapshot> snapshorts = FirebaseFirestore.instance.collection(path).snapshots();
+    return snapshorts.map((event) {
+      final result = event.docs.map((e) {
+        bool conditionKey = false;
+        for(final element in lookIn) {
+          conditionKey = conditionKey ||  queryKey.contains(e.data()[element].toString()) || e.data()[element].toString().contains(queryKey);
+          if(conditionKey){
+            break;
+          }
+        }
+        if(conditionKey) {
+          return builder(e.data(), e.id);
+        }
+      }).where((values) => values!=null)
           .toList();
       if (sort != null) {
         result.sort(sort);
