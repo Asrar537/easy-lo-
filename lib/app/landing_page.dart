@@ -1,3 +1,4 @@
+import 'package:easy_lo/app/Home/Main/UserProfile/DrawerLandingPage.dart';
 import 'package:easy_lo/app/Home/home_page.dart';
 import 'package:easy_lo/services/StorageBuilder.dart';
 import 'package:flutter/material.dart';
@@ -8,7 +9,10 @@ class LandingPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Provider<StorageBuilder>(
       create: (_) => StorageWidgetBuilder(),
-      child: HomePage(),
+      child:  Scaffold(
+            drawer: DrawerLandingPage(),
+            body: HomePage(),
+          ),
     );
   }
 }
