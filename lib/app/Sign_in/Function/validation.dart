@@ -10,9 +10,11 @@ class NonEmptyStringValidator implements StringValidator {
 }
 
 class EmailAndPassowrdValidator {
+  final StringValidator nameValidator = NonEmptyStringValidator();
   final StringValidator emailValidator = NonEmptyStringValidator();
   final StringValidator passwordValidator = NonEmptyStringValidator();
 
+  final String invalidNameText = 'Name cannot be empty';
   final String invalidEmailText = 'Email cannot be empty';
   final String invalidPasswordText = 'Password cannot be empty';
 }

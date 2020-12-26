@@ -1,5 +1,4 @@
-
-import 'package:easy_lo/app/Home/Sign_in/Function/validation.dart';
+import 'package:easy_lo/app/Sign_in/Function/validation.dart';
 import 'package:easy_lo/services/auth.dart';
 import 'package:flutter/foundation.dart';
 
@@ -9,14 +8,16 @@ class EmailSignInChangeModel with EmailAndPassowrdValidator, ChangeNotifier {
   EmailSignInChangeModel({
     @required this.auth,
     this.submitted = false,
-    this.isLoading = false,
+    this.isLoading,
+    this.name = '',
     this.email = '',
     this.password = '',
     this.formType = EmailSignInFormType.signIn,
   });
   final AuthBase auth;
   bool submitted;
-  bool isLoading;
+  ValueNotifier<bool> isLoading;
+  String name;
   String email;
   String password;
   EmailSignInFormType formType;
@@ -24,16 +25,18 @@ class EmailSignInChangeModel with EmailAndPassowrdValidator, ChangeNotifier {
 
 
   void updateWith({
+    String name,
     String email,
     String password,
     EmailSignInFormType formType,
     bool isLoading,
     bool submitted,
   }) {
+    this.name = name ?? this.name;
     this.email = email ?? this.email;
     this.password = password ?? this.password;
     this.formType = formType ?? this.formType;
-    this.isLoading = isLoading ?? this.isLoading;
+    this.isLoading.value = isLoading ?? this.isLoading.value;
     this.submitted = submitted ?? this.submitted;
     notifyListeners();
   }
@@ -44,7 +47,7 @@ class EmailSignInChangeModel with EmailAndPassowrdValidator, ChangeNotifier {
       if (this.formType == EmailSignInFormType.signIn) {
         await auth.signWithEmail(this.email, this.password);
       } else {
-        await auth.createWithEmail(this.email, this.password);
+        await auth.createWithEmail(this.email, this.password, this.name);
       }
     } catch (e) {
       updateWith(isLoading: false);
@@ -55,7 +58,7 @@ class EmailSignInChangeModel with EmailAndPassowrdValidator, ChangeNotifier {
   bool get canSubmitted {
     return emailValidator.isValid(email) &&
         passwordValidator.isValid(password) &&
-        !this.isLoading;
+        !this.isLoading.value;
   }
 
   String get primaryText => this.formType == EmailSignInFormType.signIn
@@ -72,9 +75,15 @@ class EmailSignInChangeModel with EmailAndPassowrdValidator, ChangeNotifier {
     return passwordValid ? null : invalidPasswordText;
   }
 
+
   String get emailErrorText {
-    bool emailValid = !(submitted && !(passwordValidator.isValid(email)));
+    bool emailValid = !(submitted && !(emailValidator.isValid(email)));
     return emailValid ? null : invalidEmailText;
+  }
+
+  String get nameErrorText {
+    bool nameValid = !(submitted && !(nameValidator.isValid(name)));
+    return nameValid ? null : invalidNameText;
   }
 
 
@@ -85,6 +94,7 @@ class EmailSignInChangeModel with EmailAndPassowrdValidator, ChangeNotifier {
     updateWith(email: '', password: '', submitted: false, formType: formTypes);
   }
 
+  void updateName(String name) => updateWith(name: name);
   void updateEmail(String email) => updateWith(email: email);
   void updatePassword(String password) => updateWith(password: password);
 }

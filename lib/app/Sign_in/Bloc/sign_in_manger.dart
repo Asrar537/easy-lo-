@@ -18,7 +18,6 @@ class SignInManger {
     }
   }
 
-  Future<GUser> signAnonymus() async => await _signMethod(auth.signAnonymusly);
   Future<GUser> signGoogle() async => await _signMethod(auth.signInWithGoogle);
   Future<GUser> signFacebook() async => await _signMethod(auth.signInWithFacebook);
 }

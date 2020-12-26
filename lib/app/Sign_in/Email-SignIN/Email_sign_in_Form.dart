@@ -1,23 +1,24 @@
-
-import 'package:easy_lo/app/Home/Sign_in/Bloc/Model/email_sign_in_change_model.dart';
-import 'package:easy_lo/app/Home/Sign_in/Function/form_submit_btn.dart';
+import 'package:easy_lo/app/Sign_in/Bloc/Model/email_sign_in_change_model.dart';
+import 'package:easy_lo/common/CustomRaisedBtn.dart';
 import 'package:easy_lo/common/Platform_widget/platform_exception_alert_dialog.dart';
 import 'package:easy_lo/services/auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
-//change notifier
 class EmailSignInForm extends StatefulWidget {
   EmailSignInForm({@required this.model});
   final EmailSignInChangeModel model;
 
-  static Widget create(BuildContext context) {
+  static Widget create(BuildContext context, ValueNotifier<bool> isLoading) {
+    print(isLoading);
     final auth = Provider.of<AuthBase>(context, listen: false);
     return ChangeNotifierProvider<EmailSignInChangeModel>(
-      create: (context) => EmailSignInChangeModel(auth: auth),
+      create: (context) => EmailSignInChangeModel(auth: auth, isLoading: isLoading),
       child: Consumer<EmailSignInChangeModel>(
-        builder: (context, model, _) => EmailSignInForm(model: model),
+        builder: (context, model, _) {
+          return EmailSignInForm(model: model);
+        },
       ),
     );
   }
@@ -27,15 +28,21 @@ class EmailSignInForm extends StatefulWidget {
 }
 
 class _EmailSignInFormState extends State<EmailSignInForm> {
+  final FocusNode _nameFocusNode = FocusNode();
   final FocusNode _emailFocusNode = FocusNode();
   final FocusNode _passwordFocusNode = FocusNode();
-  final TextEditingController _emailTextfieldController = TextEditingController();
-  final TextEditingController _passwordTextfieldController = TextEditingController();
+  final TextEditingController _nameTextfieldController = TextEditingController();
+  final TextEditingController _emailTextfieldController =
+      TextEditingController();
+  final TextEditingController _passwordTextfieldController =
+      TextEditingController();
 
   @override
   void dispose() {
+    _nameTextfieldController.dispose();
     _emailTextfieldController.dispose();
     _passwordTextfieldController.dispose();
+    _nameFocusNode.dispose();
     _emailFocusNode.dispose();
     _passwordFocusNode.dispose();
 
@@ -45,13 +52,16 @@ class _EmailSignInFormState extends State<EmailSignInForm> {
   Future<void> _submit() async {
     try {
       await widget.model.submit();
-      Navigator.of(context).pop();
     } catch (e) {
+      print(e);
       PlatformExceptionAlertDialog(
         title: 'Sign in Failed',
         exception: PlatformException(code: e.code, message: e.message),
       ).show(context);
     }
+  }
+  void _nameEditingComplete() {
+    FocusScope.of(context).requestFocus(_emailFocusNode);
   }
 
   void _emailEditingComplete() {
@@ -60,26 +70,65 @@ class _EmailSignInFormState extends State<EmailSignInForm> {
 
   void _toggleForm() {
     widget.model.toggleForm();
+    _nameTextfieldController.clear();
     _emailTextfieldController.clear();
     _passwordTextfieldController.clear();
   }
 
   List<Widget> _buildChildern() {
     return [
+    if(widget.model.formType == EmailSignInFormType.register) ...[
+        _buildNameTextField(),
+      ],
       _buildEmailTextField(),
       SizedBox(height: 8.0),
       _buildPasswordTextField(),
-      SizedBox(height: 8.0),
-      FormSubmitBtn(
-        text: widget.model.primaryText,
-        onPressed: widget.model.canSubmitted ? _submit : null,
+      SizedBox(height: 32.0),
+      CustomRaisedBtn(
+        borderRadius: 25,
+        child: Text(
+          widget.model.primaryText,
+          style: TextStyle(
+              color: Colors.white, fontSize: 15.0, fontWeight: FontWeight.bold),
+        ),
+        color: Colors.black87,
+        onpress: widget.model.canSubmitted ? _submit : null,
       ),
       SizedBox(height: 8.0),
       FlatButton(
         child: Text(widget.model.secondryText),
-        onPressed: widget.model.isLoading ? null : _toggleForm,
+        onPressed: widget.model.isLoading.value ? null : _toggleForm,
       ),
     ];
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          mainAxisSize: MainAxisSize.min,
+          children: _buildChildern(),
+        ),
+      ),
+    );
+  }
+
+  TextField _buildNameTextField() {
+    return TextField(
+      controller: _nameTextfieldController,
+      decoration: InputDecoration(
+        labelText: 'Name',
+        errorText: widget.model.nameErrorText,
+        enabled: widget.model.isLoading.value == false,
+      ),
+      focusNode: _nameFocusNode,
+      textInputAction: TextInputAction.next,
+      onEditingComplete: _nameEditingComplete,
+      onChanged: widget.model.updateName,
+    );
   }
 
   TextField _buildEmailTextField() {
@@ -88,9 +137,8 @@ class _EmailSignInFormState extends State<EmailSignInForm> {
       decoration: InputDecoration(
         labelText: 'Email',
         errorText: widget.model.emailErrorText,
-        enabled: widget.model.isLoading == false,
+        enabled: widget.model.isLoading.value == false,
       ),
-      autofocus: true,
       keyboardType: TextInputType.emailAddress,
       focusNode: _emailFocusNode,
       textInputAction: TextInputAction.next,
@@ -105,25 +153,13 @@ class _EmailSignInFormState extends State<EmailSignInForm> {
       decoration: InputDecoration(
         labelText: 'Password',
         errorText: widget.model.passwordErrorText,
-        enabled: widget.model.isLoading == false,
+        enabled: widget.model.isLoading.value == false,
       ),
       textInputAction: TextInputAction.done,
       focusNode: _passwordFocusNode,
       obscureText: true,
       onEditingComplete: _submit,
       onChanged: widget.model.updatePassword,
-    );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(16.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        mainAxisSize: MainAxisSize.min,
-        children: _buildChildern(),
-      ),
     );
   }
 }

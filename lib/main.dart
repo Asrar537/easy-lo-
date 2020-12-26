@@ -1,7 +1,5 @@
-import 'package:easy_lo/app/Home/Main/UserProfile/DrawerLandingPage.dart';
 import 'package:easy_lo/app/landing_page.dart';
 import 'package:easy_lo/services/auth.dart';
-import 'package:easy_lo/services/database.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -33,10 +31,7 @@ class MyApp extends StatelessWidget {
           if (snapshot.connectionState == ConnectionState.done) {
             return Provider<AuthBase>(
               create: (context) => Auth(),
-              child: Provider<Database>(
-                create: (_) => FireStoreDatabase(),
-                child: LandingPage(),
-              ),
+              child: LandingPage(),
             );
           }
           return Container(

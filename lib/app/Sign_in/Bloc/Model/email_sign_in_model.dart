@@ -1,5 +1,5 @@
 
-import 'package:easy_lo/app/Home/Sign_in/Function/validation.dart';
+import 'package:easy_lo/app/Sign_in/Function/validation.dart';
 
 enum EmailSignInFormType { signIn, register }
 

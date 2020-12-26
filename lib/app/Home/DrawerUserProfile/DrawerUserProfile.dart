@@ -1,11 +1,39 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:easy_lo/common/Platform_widget/platform_alert_dialog.dart';
+import 'package:easy_lo/services/auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class DrawerUserProfile extends StatelessWidget {
+  Future<void> _signOut(BuildContext context) async {
+    try {
+      final auth = Provider.of<AuthBase>(context, listen: false);
+      await auth.signOut();
+    } catch (e) {
+      print('from home page' + e.toString());
+    }
+  }
+
+
+  Future<void> _confirmedSignOut(BuildContext context) async {
+    //CUP_PlatformAlertDialog
+    final logOutRequest = await PlatformAlertDialog(
+      title: 'LogOut',
+      content: 'Are you sure that you want to logout?',
+      defaultActionText: 'Log-Out',
+      cancleActionText: 'Cancel',
+    ).show(context);
+
+    if (logOutRequest) {
+      _signOut(context);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    String url = '';
+    final user = Provider.of<GUser>(context, listen: false);
+    String url = user?.photoUrl??'';
     return SafeArea(
       child: Drawer(
         child: Column(
@@ -44,7 +72,7 @@ class DrawerUserProfile extends StatelessWidget {
                           height: 5,
                         ),
                         Text(
-                          'usama naeem',
+                          user?.displayName??'Name',
                           style: TextStyle(color: Colors.white, fontSize: 25),
                         )
                       ],
@@ -59,7 +87,7 @@ class DrawerUserProfile extends StatelessWidget {
                 ListTile(
                   leading: Icon(Icons.alternate_email),
                   title: Text(
-                    'email.example.com',
+                    user?.email??'email.example.com',
                     style: TextStyle(
                       fontFamily: 'Avenir',
                       fontSize: 16,
@@ -99,7 +127,7 @@ class DrawerUserProfile extends StatelessWidget {
                       ],
                     ),
                   ),
-                  onPressed: () => {},
+                  onPressed: () => _confirmedSignOut(context),
                 ),
               ),
             )

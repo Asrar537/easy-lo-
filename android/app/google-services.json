@@ -15,11 +15,11 @@
       },
       "oauth_client": [
         {
-          "client_id": "501881345171-teibacdj1roc5avijng09sqjq2j24pt5.apps.googleusercontent.com",
+          "client_id": "501881345171-n8642so6oc32gl26d4u7hri0qdocmjqp.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.medlife.easy_lo",
-            "certificate_hash": "7f99d90a2ea7aea52264371a43385b8b82729fdb"
+            "certificate_hash": "2121f84caa92ac93a6bf3795914ee6285296adc3"
           }
         },
         {
