@@ -5,14 +5,14 @@ class ProgramVideoModule {
     @required this.id,
     @required this.name,
     this.dec,
-    this.VUrl,
-    this.VCata,
+    this.vUrl,
+    this.vCata,
   });
   final String id;
   final String name;
   final String dec;
-  final String VUrl;
-  final int VCata;
+  final String vUrl;
+  final int vCata;
 
   factory ProgramVideoModule.fromMap(
       Map<String, dynamic> data, String documentId) {
@@ -21,14 +21,14 @@ class ProgramVideoModule {
     }
     final String name = data['name'];
     final String dec = data['dec'];
-    final String VUrl = data['VUrl'];
-    final int VCata = data['VCata'];
+    final String vUrl = data['VUrl'];
+    final int vCata = data['VCata'];
     return ProgramVideoModule(
       id: documentId,
       name: name,
       dec: dec,
-      VUrl: VUrl,
-      VCata: VCata,
+      vUrl: vUrl,
+      vCata: vCata,
     );
   }
 
@@ -36,8 +36,8 @@ class ProgramVideoModule {
     return {
       'name': name,
       'dec': dec,
-      'VUrl': VUrl,
-      'VCata': VCata,
+      'VUrl': vUrl,
+      'VCata': vCata,
     };
   }
 }

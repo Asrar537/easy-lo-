@@ -14,7 +14,7 @@ abstract class Database {
   Stream<List<ProgramSallybusModule>> syllabusStream({String bookId});
   Stream<List<ProgramVideoModule>> videoStream({String bookId});
 
-  List<Stream<List<dynamic>>> Search({String queryValue});
+  List<Stream<List<dynamic>>> search({String queryValue});
 }
 
 class FireStoreDatabase implements Database {
@@ -68,6 +68,12 @@ class FireStoreDatabase implements Database {
       _firetoreService.readCollection<ProgramSallybusModule>(
         path: APIPath.syllabus(),
         builder: (data, documentId) => ProgramSallybusModule.fromMap(data, documentId),
+        queryBuilder: bookId != null
+            ? (query) => query.where(
+          'bookId',
+          isEqualTo: bookId,
+        )
+            : null,
       );
 
   @override
@@ -85,7 +91,7 @@ class FireStoreDatabase implements Database {
       );
 
   @override
-  List<Stream<List<dynamic>>> Search({String queryValue}) {
+  List<Stream<List<dynamic>>> search({String queryValue}) {
 
     final List<Stream<List<dynamic>>> resultList = List();
     resultList.add(_firetoreService.readCollectionForSearch<ProgramModule>(

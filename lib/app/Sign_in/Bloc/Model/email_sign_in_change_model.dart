@@ -56,9 +56,13 @@ class EmailSignInChangeModel with EmailAndPassowrdValidator, ChangeNotifier {
   }
 
   bool get canSubmitted {
-    return emailValidator.isValid(email) &&
+    bool canSubmit = emailValidator.isValid(email) &&
         passwordValidator.isValid(password) &&
         !this.isLoading.value;
+    if(formType == EmailSignInFormType.register){
+      canSubmit = canSubmit && nameValidator.isValid(name);
+    }
+    return canSubmit;
   }
 
   String get primaryText => this.formType == EmailSignInFormType.signIn

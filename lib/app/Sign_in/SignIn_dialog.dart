@@ -73,7 +73,6 @@ class _SignInDialogState extends State<SignInDialog> {
         body: Padding(
           padding: EdgeInsets.all(18),
           child: Column(
-            //mainAxisSize: MainAxisSize.max,
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [

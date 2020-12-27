@@ -20,12 +20,11 @@ class LandingPage extends StatelessWidget {
           return Provider<GUser>.value(
             value: user,
             child: Provider<Database>(
-              create: (_) => FireStoreDatabase(),//uid: user.uid
+              create: (_) => FireStoreDatabase(), //uid: user.uid
               child: HomePageDrawer(),
             ),
           );
         } else {
-          //when snapshot has no data not even null show app is loading
           return Scaffold(
             body: Center(
               child: CircularProgressIndicator(),

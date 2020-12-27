@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:easy_lo/common/Platform_widget/platform_alert_dialog.dart';
+import 'package:easy_lo/common/image/avatar.dart';
 import 'package:easy_lo/services/auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -14,7 +15,6 @@ class DrawerUserProfile extends StatelessWidget {
       print('from home page' + e.toString());
     }
   }
-
 
   Future<void> _confirmedSignOut(BuildContext context) async {
     //CUP_PlatformAlertDialog
@@ -33,7 +33,8 @@ class DrawerUserProfile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<GUser>(context, listen: false);
-    String url = user?.photoUrl??'';
+    String url = user?.photoUrl ?? '';
+
     return SafeArea(
       child: Drawer(
         child: Column(
@@ -61,18 +62,15 @@ class DrawerUserProfile extends StatelessWidget {
                         SizedBox(
                           height: 5,
                         ),
-                        CircleAvatar(
+                        Avatar(
+                          photoUrl: url,
                           radius: 50,
-                          child: Icon(Icons.camera_alt_outlined),
-                          backgroundImage: url.isEmpty
-                              ? null
-                              : CachedNetworkImageProvider(url),
                         ),
                         SizedBox(
                           height: 5,
                         ),
                         Text(
-                          user?.displayName??'Name',
+                          user?.displayName ?? 'Name',
                           style: TextStyle(color: Colors.white, fontSize: 25),
                         )
                       ],
@@ -84,17 +82,19 @@ class DrawerUserProfile extends StatelessWidget {
             ListView(
               shrinkWrap: true,
               children: [
-                ListTile(
-                  leading: Icon(Icons.alternate_email),
-                  title: Text(
-                    user?.email??'email.example.com',
-                    style: TextStyle(
-                      fontFamily: 'Avenir',
-                      fontSize: 16,
-                      color: Colors.black87,
+                if (user.email.isNotEmpty) ...[
+                  ListTile(
+                    leading: Icon(Icons.alternate_email),
+                    title: Text(
+                      user?.email ?? 'email.example.com',
+                      style: TextStyle(
+                        fontFamily: 'Avenir',
+                        fontSize: 16,
+                        color: Colors.black87,
+                      ),
                     ),
                   ),
-                ),
+                ],
               ],
             ),
             SizedBox(

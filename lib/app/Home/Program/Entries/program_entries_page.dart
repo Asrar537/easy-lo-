@@ -12,15 +12,16 @@ class ProgramEntriesPage extends StatefulWidget {
   static void show(BuildContext context, {ProgramModule program, Database database, IconButton search}) {
     Navigator.of(context).push(
       CupertinoPageRoute(
-        builder: (context) => Provider<ProgramModule>(
-          create: (_) => program,
-          child: Provider<IconButton>(
-            create: (_) => search,
-            child: ProgramEntriesPage(
-              database: database,
+        builder: (context) =>
+            Provider<ProgramModule>(
+              create: (_) => program,
+              child: Provider<IconButton>(
+                create: (_) => search,
+                child: ProgramEntriesPage(
+                  database: database,
+                ),
+              ),
             ),
-          ),
-        ),
       ),
     );
   }
@@ -29,12 +30,13 @@ class ProgramEntriesPage extends StatefulWidget {
   _ProgramEntriesPageState createState() => _ProgramEntriesPageState();
 }
 
-class _ProgramEntriesPageState extends State<ProgramEntriesPage> with AutomaticKeepAliveClientMixin<ProgramEntriesPage> {
+class _ProgramEntriesPageState extends State<ProgramEntriesPage>  with AutomaticKeepAliveClientMixin<ProgramEntriesPage>{
   @override
   bool get wantKeepAlive => true;
 
   @override
-  Widget build(BuildContext context)  {
+  Widget build(BuildContext context) {
+    super.build(context);
     final program = Provider.of<ProgramModule>(context, listen: false);
     final search  = Provider.of<IconButton>(context, listen: false);
     return Scaffold(

@@ -45,7 +45,6 @@ class _PdfViewerState extends State<PdfViewer> {
       builder: (context, snapshort) {
         if (snapshort.connectionState == ConnectionState.done) {
           String _url = snapshort.data;
-          print(_url);
           return const PDF().fromUrl(
             _url,
             placeholder: (double progress) => Center(

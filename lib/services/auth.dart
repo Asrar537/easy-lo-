@@ -22,7 +22,7 @@ abstract class AuthBase {
   Future<GUser> currentUser();
 
   Future<GUser> signWithEmail(String email, String password);
-  Future<GUser> createWithEmail(String email, String password, String name);
+  Future<void> createWithEmail(String email, String password, String name);
   Future<GUser> signInWithGoogle();
   Future<GUser> signInWithFacebook();
 
@@ -33,9 +33,8 @@ abstract class AuthBase {
 class Auth implements AuthBase {
   final _firebaseAuth = FirebaseAuth.instance;
 
-  //convert fireuser to user
   GUser _userFromFirebase(User user) {
-    print(user.email);
+    print(user.displayName);
     if (user == null) {
       return null;
     }
@@ -63,18 +62,20 @@ class Auth implements AuthBase {
   Future<GUser> signWithEmail(String email, String password) async {
     final authResult = await _firebaseAuth.signInWithEmailAndPassword(
         email: email, password: password);
-    print(authResult.user.displayName);
-    print(authResult.user.email);
     return _userFromFirebase(authResult.user);
   }
 
   @override
-  Future<GUser> createWithEmail(String email, String password, String name) async {
+  Future<void> createWithEmail(String email, String password, String name) async {
     final authResult = await _firebaseAuth.createUserWithEmailAndPassword(
         email: email, password: password);
     await authResult.user.updateProfile(displayName: name);
     await authResult.user.reload();
-    return _userFromFirebase(authResult.user);
+    // final user =  await currentUser();
+    // print('usama');
+    // print(user.displayName);
+    // return user;
+    //return _userFromFirebase(user);
   }
 
   @override

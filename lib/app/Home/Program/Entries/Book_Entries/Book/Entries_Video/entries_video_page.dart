@@ -21,7 +21,7 @@ class EntriesVideoPage extends StatelessWidget {
           return ListItemBuilder<ProgramVideoModule>(
             snapshot: snapshot,
             itemBuilder: (context, video) {
-              String _videoId = YoutubePlayer.convertUrlToId(video.VUrl);
+              String _videoId = YoutubePlayer.convertUrlToId(video.vUrl);
               if(_videoId == null) {
                 return Container();
               }
@@ -31,7 +31,7 @@ class EntriesVideoPage extends StatelessWidget {
                     Navigator.of(context, rootNavigator: true).push(
                       CupertinoPageRoute(
                         builder: (context) => VideoPlayerScreen(
-                          videoId: video?.VUrl ?? '',
+                          videoId: video?.vUrl ?? '',
                           videoTitle: video.name,
                         ),
                       ),
