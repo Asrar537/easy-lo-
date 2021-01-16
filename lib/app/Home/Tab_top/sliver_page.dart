@@ -34,6 +34,10 @@ class SliverPage<T> extends StatelessWidget {
           headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
             return [
               SliverAppBar(
+                iconTheme: IconThemeData(
+                  color:
+                      Color.fromRGBO(32, 168, 151, 1), //change your color here
+                ),
                 pinned: true,
                 expandedHeight: 150.0,
                 elevation: 0,
@@ -46,7 +50,7 @@ class SliverPage<T> extends StatelessWidget {
                 ),
                 centerTitle: false,
                 actions: [
-                  if(search != null)...{
+                  if (search != null) ...{
                     search,
                   },
                 ],
@@ -59,21 +63,18 @@ class SliverPage<T> extends StatelessWidget {
                       preferredSize: Size.fromHeight(52),
                       child: Container(
                         margin: EdgeInsets.zero,
-                        decoration:
-                            BoxDecoration(color: Colors.indigo, boxShadow: [
-                          BoxShadow(
-                            spreadRadius: -10,
-                            blurRadius: 30,
-                            color: Colors.black.withOpacity(0.2),
-                            offset: Offset(0, 25),
-                          )
-                        ]),
+                        decoration: BoxDecoration(
+                          color: Color.fromRGBO(225, 255, 247, 1),
+
+                        ),
                         child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: SingleChildScrollView(
-                            controller: scrollController,
-                            scrollDirection: Axis.horizontal,
-                            child: gNav,
+                          padding: const EdgeInsets.all(0.0),
+                          child: Center(
+                            child: SingleChildScrollView(
+                              controller: scrollController,
+                              scrollDirection: Axis.horizontal,
+                              child: Center(child: gNav),
+                            ),
                           ),
                         ),
                       ),

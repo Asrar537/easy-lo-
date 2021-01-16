@@ -52,7 +52,7 @@ class FirestoreService {
       final result = event.docs.map((e) {
         bool conditionKey = false;
         for(final element in lookIn) {
-          conditionKey = conditionKey ||  queryKey.contains(e.data()[element].toString()) || e.data()[element].toString().contains(queryKey);
+          conditionKey = conditionKey ||  queryKey.contains(e.data()[element].toString().toLowerCase()) || (e.data()[element].toString().toLowerCase()).contains(queryKey);
           if(conditionKey){
             break;
           }

@@ -1,4 +1,4 @@
-import 'package:easy_lo/app/Home/Program/program_page.dart';
+import 'package:easy_lo/app/Home/Program/program_page_main.dart';
 import 'package:easy_lo/app/Home/Tab_bottom/cupertino_hom_scaffold.dart';
 import 'package:easy_lo/app/Home/Tab_bottom/tab_item_bottom.dart';
 import 'package:easy_lo/app/Home/Main/Main_Home_page.dart';
@@ -15,7 +15,7 @@ class _HomePageState extends State<HomePage> {
   Map<TabItemsBottom, WidgetBuilder> get widgetBuilder {
     return {
       TabItemsBottom.home : (context) => MainHomePage(),
-      TabItemsBottom.library : (context) => ProgramPage(),
+      TabItemsBottom.library : (context) => MainProgramPage(),
     };
   }
 

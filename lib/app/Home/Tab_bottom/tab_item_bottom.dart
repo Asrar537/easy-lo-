@@ -6,13 +6,12 @@ enum TabItemsBottom{
 }
 
 class TabItemData{
-  TabItemData({@required this.icon, @required  this.title});
+  TabItemData({@required this.icon});
 
   final IconData icon;
-  final String title;
 
   static Map<TabItemsBottom, TabItemData> allTabs = {
-    TabItemsBottom.home: TabItemData(icon: Icons.home, title: 'Home'),
-    TabItemsBottom.library: TabItemData(icon: Icons.local_library, title: 'Library'),
+    TabItemsBottom.home: TabItemData(icon: Icons.home),
+    TabItemsBottom.library: TabItemData(icon: Icons.local_library),
   };
 }

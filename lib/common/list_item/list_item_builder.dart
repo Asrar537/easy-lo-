@@ -1,12 +1,15 @@
 import 'package:easy_lo/common/list_item/empty_content.dart';
 import 'package:flutter/material.dart';
 
-typedef ItemWidgetBuilder_onTap<T> = Widget Function(BuildContext context, T item);
+typedef ItemWidgetBuilder_onTap<T> = Widget Function(
+    BuildContext context, T item);
 
 class ListItemBuilder<T> extends StatelessWidget {
-  const ListItemBuilder(
-      {Key key, @required this.snapshot, @required this.itemBuilder})
-      : super(key: key);
+  const ListItemBuilder({
+    Key key,
+    @required this.snapshot,
+    @required this.itemBuilder,
+  }) : super(key: key);
 
   final AsyncSnapshot<List<T>> snapshot;
   final ItemWidgetBuilder_onTap<T> itemBuilder;
@@ -22,13 +25,11 @@ class ListItemBuilder<T> extends StatelessWidget {
       }
     }
     if (snapshot.hasError) {
-      print(snapshot.error);
       return EmptyContent(
         title: 'Something went wrong',
         massage: 'Can\'t load items right now',
       );
     }
-    print('in loading main');
     return Center(child: CircularProgressIndicator());
   }
 
@@ -37,7 +38,9 @@ class ListItemBuilder<T> extends StatelessWidget {
       scrollDirection: Axis.vertical,
       shrinkWrap: true,
       itemCount: items.length,
-      separatorBuilder: (context, index) => Divider(height: 0.6,),
+      separatorBuilder: (context, index) => Divider(
+        height: 0.6,
+      ),
       itemBuilder: (context, index) => itemBuilder(context, items[index]),
     );
   }

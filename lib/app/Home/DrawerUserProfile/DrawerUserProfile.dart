@@ -1,4 +1,4 @@
-import 'package:cached_network_image/cached_network_image.dart';
+import 'package:easy_lo/app/Home/DrawerUserProfile/About.dart';
 import 'package:easy_lo/common/Platform_widget/platform_alert_dialog.dart';
 import 'package:easy_lo/common/image/avatar.dart';
 import 'package:easy_lo/services/auth.dart';
@@ -46,14 +46,11 @@ class DrawerUserProfile extends StatelessWidget {
               children: [
                 Container(
                   decoration: BoxDecoration(
-                      borderRadius: BorderRadius.only(
-                        //bottomLeft: Radius.circular(25),
-                        bottomRight: Radius.circular(20),
-                      ),
-                      gradient: LinearGradient(colors: [
-                        Colors.indigo,
-                        Colors.indigoAccent,
-                      ])),
+                    borderRadius: BorderRadius.only(
+                      bottomRight: Radius.circular(30),
+                    ),
+                    color: Color.fromRGBO(225, 255, 247, 1),
+                  ),
                   child: Padding(
                     padding: const EdgeInsets.symmetric(vertical: 18),
                     child: Column(
@@ -71,7 +68,9 @@ class DrawerUserProfile extends StatelessWidget {
                         ),
                         Text(
                           user?.displayName ?? 'Name',
-                          style: TextStyle(color: Colors.white, fontSize: 25),
+                          style: TextStyle(
+                              color: Color.fromRGBO(32, 168, 151, 1),
+                              fontSize: 25),
                         )
                       ],
                     ),
@@ -82,7 +81,7 @@ class DrawerUserProfile extends StatelessWidget {
             ListView(
               shrinkWrap: true,
               children: [
-                if (user.email.isNotEmpty) ...[
+                if (user.email != null) ...[
                   ListTile(
                     leading: Icon(Icons.alternate_email),
                     title: Text(
@@ -130,7 +129,33 @@ class DrawerUserProfile extends StatelessWidget {
                   onPressed: () => _confirmedSignOut(context),
                 ),
               ),
-            )
+            ),
+            Expanded(
+              child: InkWell(
+                onTap: () {
+                  About.show(context);
+                },
+                child: Align(
+                  alignment: Alignment.bottomCenter,
+                  child: Container(
+                    height: 45,
+                    width: MediaQuery.of(context).size.width,
+                    color: Colors.black,
+                    child: Center(
+                      child: Text(
+                        'About Us',
+                        style: TextStyle(
+                          fontFamily: 'Avenir',
+                          fontSize: 20,
+                          color: const Color(0xffffffff),
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
           ],
         ),
       ),

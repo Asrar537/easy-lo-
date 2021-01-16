@@ -40,14 +40,16 @@ class CupPlatformAlertDialog extends PlatformWidget {
       message: Text(content),
       actions: _buildCupertinoActions(context),
       cancelButton: CupertinoActionSheetAction(
-        child: Text(cancleActionText),
+        child: Text(
+          cancleActionText,
+        ),
         onPressed: () => Navigator.of(context).pop(true),
       ),
     );
   }
 
   List<Widget> _buildCupertinoActions(BuildContext context) {
-    return[
+    return [
       CupertinoActionSheetAction(
         child: Text(defaultActionText),
         onPressed: () => Navigator.of(context).pop(true),

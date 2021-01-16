@@ -51,14 +51,22 @@ class PlatformAlertDialog extends PlatformWidget {
     if (cancleActionText != null) {
       actions.add(
         PlatformAlertDialogAction(
-          child: Text(cancleActionText, style: TextStyle(fontSize: 18, fontWeight: FontWeight.w400),),
+          child: Text(
+            cancleActionText,
+            style: TextStyle(
+                fontSize: 18, fontWeight: FontWeight.w400, color: Colors.black),
+          ),
           onPressed: () => Navigator.of(context).pop(false),
         ),
       );
     }
     actions.add(
       PlatformAlertDialogAction(
-        child: Text(defaultActionText, style: TextStyle(fontSize: 18, fontWeight: FontWeight.w400)),
+        child: Text(defaultActionText,
+            style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.w400,
+                color: Colors.black)),
         onPressed: () => Navigator.of(context).pop(true),
       ),
     );

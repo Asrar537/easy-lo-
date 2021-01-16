@@ -1,5 +1,5 @@
-import 'package:easy_lo/app/Home/Program/Entries/Book_Entries/Book/book_page.dart';
-import 'package:easy_lo/app/Home/Program/Entries/Book_Entries/book_entries_tile.dart';
+import 'package:easy_lo/app/Home/Program/Year/Entries/Book_Entries/Book/book_page.dart';
+import 'package:easy_lo/app/Home/Program/Year/Entries/Book_Entries/book_entries_tile.dart';
 import 'package:easy_lo/app/Home/module/program_entry_module.dart';
 import 'package:easy_lo/app/Home/module/program_module.dart';
 import 'package:easy_lo/common/list_item/list_item_builder.dart';
@@ -13,20 +13,19 @@ class BookEntriesPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final database = Provider.of<Database>(context, listen: false);
     final program = Provider.of<ProgramModule>(context, listen: false);
-
     return Container(
+      margin: EdgeInsets.all(12),
       child: StreamBuilder<List<ProgramEntriesModule>>(
-        stream: database.entriesStream(programId: program?.id??null),
+        stream: database.entriesStream(programId: program?.id ?? null),
         builder: (context, snapshot) {
           return ListItemBuilder(
-            snapshot: snapshot,
-            itemBuilder: (context, entries) {
-              return BookEntriesTile(
-                entries: entries,
-                onTap: () => BookPage.show(context,entries: entries),
-              );
-            },
-          );
+              snapshot: snapshot,
+              itemBuilder: (context, entries) {
+                return BookEntriesTile(
+                  entries: entries,
+                  onTap: () => BookPage.show(context, entries: entries),
+                );
+              });
         },
       ),
     );

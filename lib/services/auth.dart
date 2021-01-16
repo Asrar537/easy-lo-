@@ -34,7 +34,6 @@ class Auth implements AuthBase {
   final _firebaseAuth = FirebaseAuth.instance;
 
   GUser _userFromFirebase(User user) {
-    print(user.displayName);
     if (user == null) {
       return null;
     }
@@ -57,71 +56,94 @@ class Auth implements AuthBase {
     return _userFromFirebase(user);
   }
 
-
   @override
   Future<GUser> signWithEmail(String email, String password) async {
-    final authResult = await _firebaseAuth.signInWithEmailAndPassword(
-        email: email, password: password);
-    return _userFromFirebase(authResult.user);
+    try {
+      final authResult = await _firebaseAuth.signInWithEmailAndPassword(
+          email: email, password: password);
+      return _userFromFirebase(authResult.user);
+    } catch (e) {
+      throw PlatformException(
+        code: 'Something_went_wrong',
+        message: 'Something went wrong, Not Reachable',
+      );
+    }
   }
 
   @override
-  Future<void> createWithEmail(String email, String password, String name) async {
-    final authResult = await _firebaseAuth.createUserWithEmailAndPassword(
-        email: email, password: password);
-    await authResult.user.updateProfile(displayName: name);
-    await authResult.user.reload();
-    // final user =  await currentUser();
-    // print('usama');
-    // print(user.displayName);
-    // return user;
-    //return _userFromFirebase(user);
+  Future<void> createWithEmail(
+      String email, String password, String name) async {
+    try {
+      final authResult = await _firebaseAuth.createUserWithEmailAndPassword(
+          email: email, password: password);
+      await authResult.user.updateProfile(displayName: name);
+      await authResult.user.reload();
+    } catch (e) {
+      throw PlatformException(
+        code: 'Something_went_wrong',
+        message: 'Something went wrong, Not Reachable',
+      );
+    }
   }
 
   @override
   Future<GUser> signInWithGoogle() async {
-    final googleAccount = await GoogleSignIn().signIn();
-    if (googleAccount != null) {
-      final googleAuth = await googleAccount.authentication;
-      if (googleAuth.accessToken != null && googleAuth.idToken != null) {
-        final authResult = await _firebaseAuth.signInWithCredential(
-          GoogleAuthProvider.credential(
-            idToken: googleAuth.idToken,
-            accessToken: googleAuth.accessToken,
-          ),
-        );
-        return _userFromFirebase(authResult.user);
+    try {
+      final googleAccount = await GoogleSignIn().signIn();
+      if (googleAccount != null) {
+        final googleAuth = await googleAccount.authentication;
+        if (googleAuth.accessToken != null && googleAuth.idToken != null) {
+          final authResult = await _firebaseAuth.signInWithCredential(
+            GoogleAuthProvider.credential(
+              idToken: googleAuth.idToken,
+              accessToken: googleAuth.accessToken,
+            ),
+          );
+          return _userFromFirebase(authResult.user);
+        } else {
+          throw PlatformException(
+            code: 'Sign in Abort by Google',
+            message: 'Sign in Abort by Google Missing Auth',
+          );
+        }
       } else {
         throw PlatformException(
-          code: 'Sign in Abort by Google',
-          message: 'Sign in Abort by Google Missing Auth',
+          code: 'User_Abort_Sign_in',
+          message: 'Sign in Abort by User',
         );
       }
-    } else {
+    } catch (e) {
       throw PlatformException(
-        code: 'User_Abort_Sign_in',
-        message: 'Sign in Abort by User',
+        code: 'network_error',
+        message: 'Sign in Failed Network error',
       );
     }
   }
 
   @override
   Future<GUser> signInWithFacebook() async {
-    final facebookLogin = FacebookLogin();
-    final fbAccount = await facebookLogin.logIn(
-      ['public_profile'],
-    );
-    if (fbAccount.accessToken != null) {
-      final authResult = await _firebaseAuth.signInWithCredential(
-        FacebookAuthProvider.credential(
-          fbAccount.accessToken.token,
-        ),
+    try {
+      final facebookLogin = FacebookLogin();
+      final fbAccount = await facebookLogin.logIn(
+        ['public_profile'],
       );
-      return _userFromFirebase(authResult.user);
-    } else {
+      if (fbAccount.accessToken != null) {
+        final authResult = await _firebaseAuth.signInWithCredential(
+          FacebookAuthProvider.credential(
+            fbAccount.accessToken.token,
+          ),
+        );
+        return _userFromFirebase(authResult.user);
+      } else {
+        throw PlatformException(
+          code: 'User_Abort_Sign_in',
+          message: 'Sign in Abort by User',
+        );
+      }
+    } catch (e) {
       throw PlatformException(
-        code: 'User_Abort_Sign_in',
-        message: 'Sign in Abort by User',
+        code: 'network_error',
+        message: 'Sign in Failed Network error',
       );
     }
   }

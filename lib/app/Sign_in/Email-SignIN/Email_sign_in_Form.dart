@@ -14,7 +14,8 @@ class EmailSignInForm extends StatefulWidget {
     print(isLoading);
     final auth = Provider.of<AuthBase>(context, listen: false);
     return ChangeNotifierProvider<EmailSignInChangeModel>(
-      create: (context) => EmailSignInChangeModel(auth: auth, isLoading: isLoading),
+      create: (context) =>
+          EmailSignInChangeModel(auth: auth, isLoading: isLoading),
       child: Consumer<EmailSignInChangeModel>(
         builder: (context, model, _) {
           return EmailSignInForm(model: model);
@@ -31,7 +32,8 @@ class _EmailSignInFormState extends State<EmailSignInForm> {
   final FocusNode _nameFocusNode = FocusNode();
   final FocusNode _emailFocusNode = FocusNode();
   final FocusNode _passwordFocusNode = FocusNode();
-  final TextEditingController _nameTextfieldController = TextEditingController();
+  final TextEditingController _nameTextfieldController =
+      TextEditingController();
   final TextEditingController _emailTextfieldController =
       TextEditingController();
   final TextEditingController _passwordTextfieldController =
@@ -60,6 +62,7 @@ class _EmailSignInFormState extends State<EmailSignInForm> {
       ).show(context);
     }
   }
+
   void _nameEditingComplete() {
     FocusScope.of(context).requestFocus(_emailFocusNode);
   }
@@ -77,7 +80,7 @@ class _EmailSignInFormState extends State<EmailSignInForm> {
 
   List<Widget> _buildChildern() {
     return [
-    if(widget.model.formType == EmailSignInFormType.register) ...[
+      if (widget.model.formType == EmailSignInFormType.register) ...[
         _buildNameTextField(),
       ],
       _buildEmailTextField(),
@@ -104,13 +107,18 @@ class _EmailSignInFormState extends State<EmailSignInForm> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          mainAxisSize: MainAxisSize.min,
-          children: _buildChildern(),
+    return Theme(
+      data: ThemeData(
+        primarySwatch: Colors.indigo,
+      ),
+      child: Container(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            mainAxisSize: MainAxisSize.min,
+            children: _buildChildern(),
+          ),
         ),
       ),
     );

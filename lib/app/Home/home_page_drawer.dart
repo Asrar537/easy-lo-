@@ -9,8 +9,7 @@ class HomePageDrawer extends StatelessWidget {
   Widget build(BuildContext context) {
     return Provider<StorageBuilder>(
       create: (_) => StorageWidgetBuilder(),
-      child:  Scaffold(
-        resizeToAvoidBottomInset: false,
+      child: Scaffold(
         drawer: DrawerUserProfile(),
         body: HomePage(),
       ),

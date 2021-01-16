@@ -10,7 +10,8 @@ class PdfViewer extends StatefulWidget {
   final ProgramPDFModule pdf;
   final Future future;
 
-  static void show(BuildContext context, {ProgramPDFModule pdf, Future future}) {
+  static void show(BuildContext context,
+      {ProgramPDFModule pdf, Future future}) {
     Navigator.of(context, rootNavigator: false).push(
       CupertinoPageRoute(
         builder: (context) => PdfViewer(
@@ -27,12 +28,20 @@ class PdfViewer extends StatefulWidget {
 }
 
 class _PdfViewerState extends State<PdfViewer> {
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.pdf?.name ?? 'PDF'),
+        elevation: 0,
+        iconTheme: IconThemeData(
+          color: Color.fromRGBO(32, 168, 151, 1), //change your color here
+        ),
+        title: Text(
+          widget.pdf?.name ?? 'PDF',
+          style: TextStyle(
+            color: Color.fromRGBO(32, 168, 151, 1), //change your color here
+          ),
+        ),
         centerTitle: true,
       ),
       body: _buildContent(),

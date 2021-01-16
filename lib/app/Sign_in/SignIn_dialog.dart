@@ -79,12 +79,27 @@ class _SignInDialogState extends State<SignInDialog> {
               Center(
                 child: widget.isLoading.value
                     ? CircularProgressIndicator()
-                    : Text(
-                        'Easy Lo',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontSize: 32.0,
-                          fontWeight: FontWeight.w600,
+                    : Container(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              'Easy',
+                              style: TextStyle(
+                                color: Colors.grey[700],
+                                fontSize: 35,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            Text(
+                              'Lo ',
+                              style: TextStyle(
+                                color: Color.fromRGBO(38, 161, 148, 1),
+                                fontSize: 35,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
                         ),
                       ),
               ),

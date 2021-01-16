@@ -3,11 +3,12 @@ import 'dart:ui';
 import 'package:meta/meta.dart';
 
 class ProgramEntriesModule {
-  ProgramEntriesModule(
-      {@required this.id,
-      @required this.name,
-      this.dec,
-      this.bookUrl});
+  ProgramEntriesModule({
+    @required this.id,
+    @required this.name,
+    this.dec,
+    this.bookUrl,
+  });
   final String id;
   final String name;
   final String dec;
@@ -23,7 +24,8 @@ class ProgramEntriesModule {
     final String name = data['name'];
     final String dec = data['dec'];
     final String bookUrl = data['book_url'];
-    return ProgramEntriesModule(id: documentId, name: name, dec: dec, bookUrl: bookUrl);
+    return ProgramEntriesModule(
+        id: documentId, name: name, dec: dec, bookUrl: bookUrl);
   }
 
   Map<String, dynamic> toMap() {
