@@ -3,6 +3,7 @@ import 'package:easy_lo/app/Home/Program/Year/Entries/Book_Entries/book_entries_
 import 'package:easy_lo/app/Home/module/program_entry_module.dart';
 import 'package:easy_lo/app/Home/module/program_module.dart';
 import 'package:easy_lo/common/list_item/list_item_builder.dart';
+import 'package:easy_lo/common/sliver_list_view.dart';
 import 'package:easy_lo/services/database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -13,21 +14,19 @@ class BookEntriesPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final database = Provider.of<Database>(context, listen: false);
     final program = Provider.of<ProgramModule>(context, listen: false);
-    return Container(
-      margin: EdgeInsets.all(12),
-      child: StreamBuilder<List<ProgramEntriesModule>>(
-        stream: database.entriesStream(programId: program?.id ?? null),
-        builder: (context, snapshot) {
-          return ListItemBuilder(
-              snapshot: snapshot,
-              itemBuilder: (context, entries) {
-                return BookEntriesTile(
-                  entries: entries,
-                  onTap: () => BookPage.show(context, entries: entries),
-                );
-              });
-        },
-      ),
+    return StreamBuilder<List<ProgramEntriesModule>>(
+      stream: database.entriesStream(programId: program?.id ?? null),
+      builder: (context, snapshot) {
+        return SliverListItemBuilder(
+          snapshot: snapshot,
+          itemBuilder: (context, entries) {
+            return BookEntriesTile(
+              entries: entries,
+              onTap: () => BookPage.show(context, entries: entries),
+            );
+          },
+        );
+      },
     );
   }
 }

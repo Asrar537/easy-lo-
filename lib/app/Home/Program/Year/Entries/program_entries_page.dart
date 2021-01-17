@@ -90,8 +90,10 @@ class _ProgramEntriesPageState extends State<ProgramEntriesPage>
                       handle: NestedScrollView.sliverOverlapAbsorberHandleFor(
                           context),
                     ),
-                    SliverToBoxAdapter(
-                      child: BookEntriesPage(),
+                    SliverPadding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 0.0, vertical: 8.0),
+                      sliver: BookEntriesPage(),
                     ),
                   ],
                 );
