@@ -1,6 +1,4 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:easy_lo/app/Home/Program/Year/Entries/Book_Entries/Book/Entries_Video/video_player.dart';
-import 'package:easy_lo/app/Home/module/program_entry_module.dart';
 import 'package:easy_lo/app/Home/module/program_video_module.dart';
 import 'package:flutter/material.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';

@@ -1,6 +1,5 @@
 import 'package:easy_lo/common/list_item/empty_content.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 
 typedef ItemWidgetBuilder_onTap<T> = Widget Function(
     BuildContext context, T item);

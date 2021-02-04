@@ -31,11 +31,7 @@ class ProgramEntriesPage extends StatefulWidget {
   _ProgramEntriesPageState createState() => _ProgramEntriesPageState();
 }
 
-class _ProgramEntriesPageState extends State<ProgramEntriesPage>
-    with AutomaticKeepAliveClientMixin<ProgramEntriesPage> {
-  @override
-  bool get wantKeepAlive => true;
-
+class _ProgramEntriesPageState extends State<ProgramEntriesPage> {
   @override
   Widget build(BuildContext context) {
     final program = Provider.of<ProgramModule>(context, listen: false);

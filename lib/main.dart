@@ -9,7 +9,12 @@ void main() {
   runApp(MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
+  @override
+  _MyAppState createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
   Map<int, Color> color = {
     50: Color.fromRGBO(225, 255, 247, .1),
     100: Color.fromRGBO(225, 255, 247, .2),

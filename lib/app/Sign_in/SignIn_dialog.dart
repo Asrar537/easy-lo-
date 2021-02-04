@@ -69,103 +69,111 @@ class _SignInDialogState extends State<SignInDialog> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        resizeToAvoidBottomInset: false,
-        body: Padding(
-          padding: EdgeInsets.all(18),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Center(
-                child: widget.isLoading.value
-                    ? CircularProgressIndicator()
-                    : Container(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
+        body: Column(
+          children: [
+            Expanded(
+              child: Center(
+                child: SingleChildScrollView(
+                  child: Padding(
+                    padding: EdgeInsets.all(18),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        Center(
+                          child: widget.isLoading.value
+                              ? CircularProgressIndicator()
+                              : Container(
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      Text(
+                                        'Easy',
+                                        style: TextStyle(
+                                          color: Colors.grey[700],
+                                          fontSize: 35,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                      Text(
+                                        'Lo ',
+                                        style: TextStyle(
+                                          color: Color.fromRGBO(38, 161, 148, 1),
+                                          fontSize: 35,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                        ),
+                        EmailSignInForm.create(context, widget.isLoading),
+                        SizedBox(height: 48.0),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          mainAxisSize: MainAxisSize.min,
                           children: [
-                            Text(
-                              'Easy',
-                              style: TextStyle(
-                                color: Colors.grey[700],
-                                fontSize: 35,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            Text(
-                              'Lo ',
-                              style: TextStyle(
-                                color: Color.fromRGBO(38, 161, 148, 1),
-                                fontSize: 35,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
+                            Expanded(
+                                child: Divider(
+                              height: 1,
+                              color: Colors.black,
+                            )),
+                            Center(child: Text('  OR CONNECT WITH  ')),
+                            Expanded(
+                                child: Divider(
+                              height: 1,
+                              color: Colors.black,
+                            )),
                           ],
                         ),
-                      ),
-              ),
-              EmailSignInForm.create(context, widget.isLoading),
-              SizedBox(height: 48.0),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  Expanded(
-                      child: Divider(
-                    height: 1,
-                    color: Colors.black,
-                  )),
-                  Center(child: Text('  OR CONNECT WITH  ')),
-                  Expanded(
-                      child: Divider(
-                    height: 1,
-                    color: Colors.black,
-                  )),
-                ],
-              ),
-              SizedBox(height: 16.0),
-              Container(
-                padding: EdgeInsets.symmetric(horizontal: 32.0),
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: SocialSignInBtn(
-                        height: 40,
-                        fontSize: 13,
-                        borderRadius: 25,
-                        icon: FaIcon(FontAwesomeIcons.facebookF,
-                            color: Colors.white),
-                        text: 'Facebook',
-                        textColor: Colors.white,
-                        color: Color(0xFF334D92),
-                        onpress: widget.isLoading.value
-                            ? null
-                            : () => _signFacebook(context),
-                      ),
-                    ),
-                    SizedBox(
-                      width: 16.0,
-                    ),
-                    Expanded(
-                      child: SocialSignInBtn(
-                        height: 40,
-                        fontSize: 13,
-                        borderRadius: 25,
-                        icon: FaIcon(
-                          FontAwesomeIcons.google,
-                          color: Colors.white,
+                        SizedBox(height: 16.0),
+                        Container(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            mainAxisSize: MainAxisSize.max,
+                            children: [
+                              SocialSignInBtn(
+                                padding: 25,
+                                height: 40,
+                                fontSize: 13,
+                                borderRadius: 25,
+                                icon: FaIcon(FontAwesomeIcons.facebookF,
+                                    color: Colors.white),
+                                text: 'Facebook',
+                                textColor: Colors.white,
+                                color: Color(0xFF334D92),
+                                onpress: widget.isLoading.value
+                                    ? null
+                                    : () => _signFacebook(context),
+                              ),
+                              SocialSignInBtn(
+                                padding: 25,
+                                height: 40,
+                                fontSize: 13,
+                                borderRadius: 25,
+                                icon: FaIcon(
+                                  FontAwesomeIcons.google,
+                                  color: Colors.white,
+                                ),
+                                text: 'Google',
+                                textColor: Colors.white,
+                                color: Color.fromRGBO(234, 67, 53, 1),
+                                onpress: widget.isLoading.value
+                                    ? null
+                                    : () => _signGoogle(context),
+                              ),
+                            ],
+                          ),
                         ),
-                        text: 'Google',
-                        textColor: Colors.white,
-                        color: Color.fromRGBO(234, 67, 53, 1),
-                        onpress: widget.isLoading.value
-                            ? null
-                            : () => _signGoogle(context),
-                      ),
+                      ],
                     ),
-                  ],
+                  ),
                 ),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

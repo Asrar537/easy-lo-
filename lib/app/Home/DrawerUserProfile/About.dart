@@ -217,58 +217,68 @@ class _AboutState extends State<About> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  InkWell(
-                    onTap: () async {
-                      try {
-                        await _launchInBrowser(
-                            'https://www.facebook.com/abdul.naeem.169067/');
-                      } catch (e) {
-                        PlatformExceptionAlertDialog(
-                          title: 'Something went wrong',
-                          exception: e,
-                        ).show(context);
-                      }
-                    },
-                    child: Row(
-                      children: [
-                        FaIcon(
-                          FontAwesomeIcons.facebookF,
-                          color: Color(0xFF334D92),
-                          size: 16,
+                  Column(
+                    children: [
+                      InkWell(
+                        onTap: () async {
+                          try {
+                            await _launchInBrowser(
+                                'https://www.facebook.com/abdul.naeem.169067/');
+                          } catch (e) {
+                            PlatformExceptionAlertDialog(
+                              title: 'Something went wrong',
+                              exception: e,
+                            ).show(context);
+                          }
+                        },
+                        child: Row(
+                          children: [
+                            FaIcon(
+                              FontAwesomeIcons.facebookF,
+                              color: Color(0xFF334D92),
+                              size: 16,
+                            ),
+                            SizedBox(
+                              width: 7,
+                            ),
+                            Text(': Usama'),
+                          ],
                         ),
-                        SizedBox(
-                          width: 7,
-                        ),
-                        Text(': Usama'),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
-                  InkWell(
-                    onTap: () async {
-                      try {
-                        await _launchInBrowser(
-                            'mailto:usamanaeem911@gmail.com?subject=Discussion&body=');
-                      } catch (e) {
-                        PlatformExceptionAlertDialog(
-                          title: 'Something went wrong',
-                          exception: e,
-                        ).show(context);
-                      }
-                    },
-                    child: Row(
+                  Expanded(
+                    child: Column(
                       children: [
-                        SizedBox(
-                          width: 7,
+                        InkWell(
+                          onTap: () async {
+                            try {
+                              await _launchInBrowser(
+                                  'mailto:usamanaeem911@gmail.com?subject=Discussion&body=');
+                            } catch (e) {
+                              PlatformExceptionAlertDialog(
+                                title: 'Something went wrong',
+                                exception: e,
+                              ).show(context);
+                            }
+                          },
+                          child: Row(
+                            children: [
+                              SizedBox(
+                                width: 7,
+                              ),
+                              FaIcon(
+                                FontAwesomeIcons.google,
+                                color: Color.fromRGBO(234, 67, 53, 1),
+                                size: 16,
+                              ),
+                              SizedBox(
+                                width: 7,
+                              ),
+                              Flexible(child: Text(': usamaneem911@gmail.com')),
+                            ],
+                          ),
                         ),
-                        FaIcon(
-                          FontAwesomeIcons.google,
-                          color: Color.fromRGBO(234, 67, 53, 1),
-                          size: 16,
-                        ),
-                        SizedBox(
-                          width: 7,
-                        ),
-                        Text(': usamaneem911@gmail.com'),
                       ],
                     ),
                   ),
@@ -280,60 +290,72 @@ class _AboutState extends State<About> {
             ),
             Center(
               child: Row(
+                mainAxisSize: MainAxisSize.max,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  InkWell(
-                    onTap: () async {
-                      try {
-                        await _launchInBrowser(
-                            'https://www.facebook.com/rana.asrar.5680');
-                      } catch (e) {
-                        PlatformExceptionAlertDialog(
-                          title: 'Something went wrong',
-                          exception: e,
-                        ).show(context);
-                      }
-                    },
-                    child: Row(
-                      children: [
-                        FaIcon(
-                          FontAwesomeIcons.facebookF,
-                          color: Color(0xFF334D92),
-                          size: 16,
+                  Column(
+                    children: [
+                      InkWell(
+                        onTap: () async {
+                          try {
+                            await _launchInBrowser(
+                                'https://www.facebook.com/rana.asrar.5680');
+                          } catch (e) {
+                            PlatformExceptionAlertDialog(
+                              title: 'Something went wrong',
+                              exception: e,
+                            ).show(context);
+                          }
+                        },
+                        child: Row(
+                          children: [
+                            FaIcon(
+                              FontAwesomeIcons.facebookF,
+                              color: Color(0xFF334D92),
+                              size: 16,
+                            ),
+                            SizedBox(
+                              width: 7,
+                            ),
+                            Text(': Asrar Hussain'),
+                          ],
                         ),
-                        SizedBox(
-                          width: 7,
-                        ),
-                        Text(': Asrar Hussain'),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
-                  InkWell(
-                    onTap: () async {
-                      try {
-                        await _launchInBrowser(
-                            'mailto:hisrar537@gmail.com?subject=Discussion&body=');
-                      } catch (e) {
-                        PlatformExceptionAlertDialog(
-                          title: 'Something went wrong',
-                          exception: e,
-                        ).show(context);
-                      }
-                    },
-                    child: Row(
+                  Expanded(
+                    child: Column(
                       children: [
-                        SizedBox(
-                          width: 7,
+                        InkWell(
+                          onTap: () async {
+                            try {
+                              await _launchInBrowser(
+                                  'mailto:hisrar537@gmail.com?subject=Discussion&body=');
+                            } catch (e) {
+                              PlatformExceptionAlertDialog(
+                                title: 'Something went wrong',
+                                exception: e,
+                              ).show(context);
+                            }
+                          },
+                          child: Row(
+                            mainAxisSize: MainAxisSize.max,
+                            children: [
+                              SizedBox(
+                                width: 7,
+                              ),
+                              FaIcon(
+                                FontAwesomeIcons.google,
+                                color: Color.fromRGBO(234, 67, 53, 1),
+                                size: 16,
+                              ),
+                              SizedBox(
+                                width: 7,
+                              ),
+                              Flexible(child: Text(': hisrar537@gmail.com')),
+                            ],
+                          ),
                         ),
-                        FaIcon(
-                          FontAwesomeIcons.google,
-                          color: Color.fromRGBO(234, 67, 53, 1),
-                          size: 16,
-                        ),
-                        SizedBox(
-                          width: 7,
-                        ),
-                        Text(' : hisrar537@gmail.com'),
                       ],
                     ),
                   ),

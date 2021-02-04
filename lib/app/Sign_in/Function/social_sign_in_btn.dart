@@ -8,8 +8,10 @@ class SocialSignInBtn extends StatelessWidget {
     this.color: Colors.white,
     this.borderRadius: 2.0,
     this.onpress,
-    this.height: 50.0, this.textColor,
+    this.height: 50.0,
+    this.textColor,
     this.fontSize = 15.0,
+    this.padding = 0,
   }) : assert(borderRadius != null);
 
   final double fontSize;
@@ -20,12 +22,14 @@ class SocialSignInBtn extends StatelessWidget {
   final double borderRadius;
   final VoidCallback onpress;
   final double height;
+  final double padding;
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
       height: height,
       child: RaisedButton.icon(
+          padding: EdgeInsets.symmetric(horizontal: padding),
           icon: icon,
           label: Text(
             text,
