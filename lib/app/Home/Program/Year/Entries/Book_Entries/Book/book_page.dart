@@ -1,3 +1,4 @@
+import 'package:easy_lo/app/Home/Program/Year/Entries/Book_Entries/Book/Entries_Video/entries_video_playlist.dart';
 import 'package:easy_lo/app/Home/Tab_top/sliver_page.dart';
 import 'package:easy_lo/app/Home/Tab_top/tab_item_top.dart';
 import 'package:easy_lo/app/Home/module/program_entry_module.dart';
@@ -49,7 +50,7 @@ class _BookPageState extends State<BookPage> {
 
   Map<TabItemsTop, WidgetBuilder> get widgetBuilder {
     return {
-      TabItemsTop.video: (context) => new EntriesVideoPage(),
+      TabItemsTop.video: (context) => new EntriesVideoPlaylist(),//new EntriesVideoPage(),
       TabItemsTop.pdf: (context) => new EntriesPDFPage(),
       TabItemsTop.syllabus: (context) => new EntriesSallybusPage(),
       TabItemsTop.notes: (context) => new EntriesNotesPage(),

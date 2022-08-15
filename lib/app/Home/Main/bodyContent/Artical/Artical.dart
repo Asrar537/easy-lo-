@@ -1,5 +1,6 @@
 import 'package:easy_lo/app/Home/Main/bodyContent/Artical/Artical_tile.dart';
 import 'package:easy_lo/app/Home/Main/bodyContent/main_body_content.dart';
+import 'package:easy_lo/app/Home/Tab_bottom/tab_item_bottom.dart';
 import 'package:easy_lo/app/Home/module/artical_module.dart';
 import 'package:easy_lo/common/list_item/empty_content.dart';
 import 'package:easy_lo/services/database.dart';
@@ -7,6 +8,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class Artical extends StatelessWidget {
+  final ValueChanged<TabItemsBottom> selectTab;
+
+  const Artical({Key key, this.selectTab}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     final database = Provider.of<Database>(context, listen: false);
@@ -44,7 +48,9 @@ class Artical extends StatelessWidget {
         if (index == 0) {
           return Column(
             children: [
-              MainBodyContent(),
+              MainBodyContent(
+                selectTab: selectTab,
+              ),
               ArticalTile(
                 artical: items[index],
               ),

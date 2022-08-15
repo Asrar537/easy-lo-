@@ -4,6 +4,7 @@ import 'package:easy_lo/app/Home/module/program_module.dart';
 import 'package:easy_lo/app/Home/module/program_pdf_module.dart';
 import 'package:easy_lo/app/Home/module/program_sallybus_module.dart';
 import 'package:easy_lo/app/Home/module/program_video_module.dart';
+import 'package:easy_lo/app/Home/module/program_video_playlist_module.dart';
 import 'package:easy_lo/services/database_files/api_path.dart';
 import 'package:easy_lo/services/firestore_service/firestore_service.dart';
 
@@ -14,7 +15,8 @@ abstract class Database {
   Stream<List<ProgramPDFModule>> pdfBookStream({String bookId});
   Stream<List<ProgramPDFModule>> pdfNotesStream({String bookId});
   Stream<List<ProgramSallybusModule>> syllabusStream({String bookId});
-  Stream<List<ProgramVideoModule>> videoStream({String bookId});
+  Stream<List<ProgramVideoPlaylistModule>> videoPlaylistStream({String bookId});
+  Stream<List<ProgramVideoModule>> videoStream({String playlistId});
   Stream<List<ArticalModule>> articalStream();
 
   List<Stream<List<dynamic>>> search({String queryValue});
@@ -28,7 +30,6 @@ class FireStoreDatabase implements Database {
       _firetoreService.readCollection<ProgramModule>(
         path: APIPath.mainPrograms(),
         builder: (data, documentId) => ProgramModule.fromMap(data, documentId),
-        sort: (lhs, rhs) => lhs.name.compareTo(rhs.name),
       );
 
   @override
@@ -39,7 +40,6 @@ class FireStoreDatabase implements Database {
         queryBuilder: mainProgramId != null
             ? (query) => query.where('mainProgramId', isEqualTo: mainProgramId)
             : null,
-        sort: (lhs, rhs) => lhs.name.compareTo(rhs.name),
       );
   @override
   Stream<List<ProgramEntriesModule>> entriesStream({String programId}) {
@@ -64,7 +64,6 @@ class FireStoreDatabase implements Database {
                   isEqualTo: bookId,
                 )
             : null,
-        sort: (lhs, rhs) => lhs.pdfCata.compareTo(rhs.pdfCata),
       );
 
   @override
@@ -90,18 +89,34 @@ class FireStoreDatabase implements Database {
       );
 
   @override
-  Stream<List<ProgramVideoModule>> videoStream({String bookId}) =>
-      _firetoreService.readCollection<ProgramVideoModule>(
-        path: APIPath.video(),
-        builder: (data, documentId) =>
-            ProgramVideoModule.fromMap(data, documentId),
+  Stream<List<ProgramVideoPlaylistModule>> videoPlaylistStream({String bookId}) =>
+      _firetoreService.readCollection<ProgramVideoPlaylistModule>(
+        path: APIPath.playlist(),
+        builder: (data, documentId) =>ProgramVideoPlaylistModule.fromMap(data, documentId),
         queryBuilder: bookId != null
             ? (query) => query.where(
-                  'bookId',
-                  isEqualTo: bookId,
-                )
+          'bookId',
+          isEqualTo: bookId,
+        )
             : null,
       );
+
+  @override
+  Stream<List<ProgramVideoModule>> videoStream({String playlistId}) {
+    print("playlistId$playlistId");
+    return _firetoreService.readCollection<ProgramVideoModule>(
+      path: APIPath.video(),
+      builder: (data, documentId) =>
+          ProgramVideoModule.fromMap(data, documentId),
+      queryBuilder: playlistId != null
+          ? (query) =>
+          query.where(
+            'playlistId',
+            isEqualTo: playlistId,
+          )
+          : null,
+    );
+  }
 
   Stream<List<ArticalModule>> articalStream() =>
       _firetoreService.readCollection<ArticalModule>(

@@ -1,6 +1,11 @@
+import 'package:easy_lo/app/Home/Tab_bottom/tab_item_bottom.dart';
 import 'package:flutter/material.dart';
 
 class MainBodyContent extends StatelessWidget {
+  final ValueChanged<TabItemsBottom> selectTab;
+
+  const MainBodyContent({Key key, this.selectTab}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -80,7 +85,9 @@ class MainBodyContent extends StatelessWidget {
                         height: 10,
                       ),
                       InkWell(
-                        onTap: () {},
+                        onTap: () {
+                          selectTab(TabItemsBottom.library);
+                        },
                         child: Container(
                           width: double.infinity,
                           height: 50,
@@ -142,7 +149,7 @@ class MainBodyContent extends StatelessWidget {
                 ),
                 child: Center(
                   child: Text(
-                    'Top Articles',
+                    'Latest Updates',
                     style: TextStyle(
                         fontSize: 19,
                         color: Color.fromRGBO(32, 168, 151, 1),

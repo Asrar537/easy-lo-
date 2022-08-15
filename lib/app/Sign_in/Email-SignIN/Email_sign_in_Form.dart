@@ -11,7 +11,6 @@ class EmailSignInForm extends StatefulWidget {
   final EmailSignInChangeModel model;
 
   static Widget create(BuildContext context, ValueNotifier<bool> isLoading) {
-    print(isLoading);
     final auth = Provider.of<AuthBase>(context, listen: false);
     return ChangeNotifierProvider<EmailSignInChangeModel>(
       create: (context) =>
@@ -55,7 +54,6 @@ class _EmailSignInFormState extends State<EmailSignInForm> {
     try {
       await widget.model.submit();
     } catch (e) {
-      print(e);
       PlatformExceptionAlertDialog(
         title: 'Sign in Failed',
         exception: PlatformException(code: e.code, message: e.message),

@@ -5,6 +5,7 @@ class APIPath {
   static String pdf() => 'pdf';
   static String note() => 'notes';
   static String syllabus() => 'syllabus';
+  static String playlist() => 'playlist';
   static String video() => 'video';
   static String artical() => 'artical';
 }

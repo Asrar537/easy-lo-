@@ -115,7 +115,7 @@ class Auth implements AuthBase {
     } catch (e) {
       throw PlatformException(
         code: 'network_error',
-        message: 'Sign in Failed Network error',
+        message: 'Sign in Failed or Network error',
       );
     }
   }
@@ -143,7 +143,7 @@ class Auth implements AuthBase {
     } catch (e) {
       throw PlatformException(
         code: 'network_error',
-        message: 'Sign in Failed Network error',
+        message: 'Sign in Failed or Network error',
       );
     }
   }

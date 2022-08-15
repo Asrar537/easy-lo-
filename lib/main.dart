@@ -32,8 +32,10 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Easy lo',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: MaterialColor(0xFFE1FFF7, color),
+
       ),
       home: FutureBuilder(
         future: Firebase.initializeApp(),

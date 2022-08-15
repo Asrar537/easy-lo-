@@ -1,9 +1,7 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
-
 class HttpServices {
-
   static Future<dynamic> getDetail(String userUrl) async {
     String embedUrl = "https://www.youtube.com/oembed?url=$userUrl&format=json";
     var res = await http.get(embedUrl);
